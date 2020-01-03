@@ -7,7 +7,7 @@ gem 'prawn'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.11'
 gem 'faker', '~> 1.6.3'
-gem 'rails_admin', '~> 0.8.1'
+gem 'rails_admin', '~> 1.3.0'
 #邮件服务
 gem 'sendgrid-ruby'
 
