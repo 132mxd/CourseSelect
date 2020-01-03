@@ -1,0 +1,932 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: announcements; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE public.announcements (
+    id integer NOT NULL,
+    user_id integer,
+    announcement_content text,
+    announcement_title character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.announcements OWNER TO ubuntu;
+
+--
+-- Name: announcements_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE public.announcements_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.announcements_id_seq OWNER TO ubuntu;
+
+--
+-- Name: announcements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE public.announcements_id_seq OWNED BY public.announcements.id;
+
+
+--
+-- Name: course_infos; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE public.course_infos (
+    id integer NOT NULL,
+    course_code integer,
+    course_day character varying,
+    course_class character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.course_infos OWNER TO ubuntu;
+
+--
+-- Name: course_infos_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE public.course_infos_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.course_infos_id_seq OWNER TO ubuntu;
+
+--
+-- Name: course_infos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE public.course_infos_id_seq OWNED BY public.course_infos.id;
+
+
+--
+-- Name: courses; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE public.courses (
+    id integer NOT NULL,
+    name character varying,
+    course_code character varying,
+    course_type character varying,
+    teaching_type character varying,
+    exam_type character varying,
+    credit character varying,
+    limit_num integer,
+    student_num integer DEFAULT 0,
+    class_room character varying,
+    course_time character varying,
+    course_week character varying,
+    department integer,
+    academic_year character varying,
+    semester character varying,
+    description text,
+    apply character varying,
+    teacher_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.courses OWNER TO ubuntu;
+
+--
+-- Name: courses_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE public.courses_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.courses_id_seq OWNER TO ubuntu;
+
+--
+-- Name: courses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE public.courses_id_seq OWNED BY public.courses.id;
+
+
+--
+-- Name: departs; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE public.departs (
+    id integer NOT NULL,
+    dept_name character varying,
+    dept_contact character varying,
+    dept_office character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.departs OWNER TO ubuntu;
+
+--
+-- Name: departs_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE public.departs_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.departs_id_seq OWNER TO ubuntu;
+
+--
+-- Name: departs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE public.departs_id_seq OWNED BY public.departs.id;
+
+
+--
+-- Name: grades; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE public.grades (
+    id integer NOT NULL,
+    course_id integer,
+    user_id integer,
+    grade integer,
+    apply boolean DEFAULT false,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.grades OWNER TO ubuntu;
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE public.grades_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.grades_id_seq OWNER TO ubuntu;
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE public.grades_id_seq OWNED BY public.grades.id;
+
+
+--
+-- Name: inform_articles; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE public.inform_articles (
+    id integer NOT NULL,
+    title character varying,
+    text text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.inform_articles OWNER TO ubuntu;
+
+--
+-- Name: inform_articles_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE public.inform_articles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.inform_articles_id_seq OWNER TO ubuntu;
+
+--
+-- Name: inform_articles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE public.inform_articles_id_seq OWNED BY public.inform_articles.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE public.schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO ubuntu;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: ubuntu
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    name character varying,
+    email character varying,
+    num character varying,
+    major character varying,
+    department integer,
+    student_class character varying,
+    reset boolean,
+    password_digest character varying,
+    remember_digest character varying,
+    admin boolean DEFAULT false,
+    teacher boolean DEFAULT false,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    reset_digest character varying,
+    reset_sent_at timestamp without time zone
+);
+
+
+ALTER TABLE public.users OWNER TO ubuntu;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO ubuntu;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: announcements id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.announcements ALTER COLUMN id SET DEFAULT nextval('public.announcements_id_seq'::regclass);
+
+
+--
+-- Name: course_infos id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.course_infos ALTER COLUMN id SET DEFAULT nextval('public.course_infos_id_seq'::regclass);
+
+
+--
+-- Name: courses id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.courses ALTER COLUMN id SET DEFAULT nextval('public.courses_id_seq'::regclass);
+
+
+--
+-- Name: departs id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.departs ALTER COLUMN id SET DEFAULT nextval('public.departs_id_seq'::regclass);
+
+
+--
+-- Name: grades id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.grades ALTER COLUMN id SET DEFAULT nextval('public.grades_id_seq'::regclass);
+
+
+--
+-- Name: inform_articles id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.inform_articles ALTER COLUMN id SET DEFAULT nextval('public.inform_articles_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: announcements; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY public.announcements (id, user_id, announcement_content, announcement_title, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: course_infos; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY public.course_infos (id, course_code, course_day, course_class, created_at, updated_at) FROM stdin;
+1	1	1	9-11	2020-01-03 05:00:27.272055	2020-01-03 05:00:27.272055
+2	2	5	2-4	2020-01-03 05:00:27.274439	2020-01-03 05:00:27.274439
+3	3	4	9-11	2020-01-03 05:00:27.276366	2020-01-03 05:00:27.276366
+4	4	3	9-11	2020-01-03 05:00:27.278196	2020-01-03 05:00:27.278196
+5	5	2	5-7	2020-01-03 05:00:27.280077	2020-01-03 05:00:27.280077
+6	6	5	2-4	2020-01-03 05:00:27.281837	2020-01-03 05:00:27.281837
+7	7	1	5-7	2020-01-03 05:00:27.283645	2020-01-03 05:00:27.283645
+8	8	2	9-11	2020-01-03 05:00:27.285374	2020-01-03 05:00:27.285374
+9	9	2	9-11	2020-01-03 05:00:27.28713	2020-01-03 05:00:27.28713
+10	10	4	5-7	2020-01-03 05:00:27.288891	2020-01-03 05:00:27.288891
+11	11	1	1-2	2020-01-03 05:00:27.290653	2020-01-03 05:00:27.290653
+12	12	1	5-7	2020-01-03 05:00:27.292446	2020-01-03 05:00:27.292446
+13	13	3	7-8	2020-01-03 05:00:27.294236	2020-01-03 05:00:27.294236
+14	14	4	5-7	2020-01-03 05:00:27.296014	2020-01-03 05:00:27.296014
+15	15	5	5-7	2020-01-03 05:00:27.297805	2020-01-03 05:00:27.297805
+16	16	3	5-7	2020-01-03 05:00:27.299648	2020-01-03 05:00:27.299648
+17	17	2	5-7	2020-01-03 05:00:27.301475	2020-01-03 05:00:27.301475
+18	18	4	5-6	2020-01-03 05:00:27.303215	2020-01-03 05:00:27.303215
+19	19	5	5-6	2020-01-03 05:00:27.305041	2020-01-03 05:00:27.305041
+20	20	2	3-4	2020-01-03 05:00:27.306829	2020-01-03 05:00:27.306829
+21	21	3	9-11	2020-01-03 05:00:27.308682	2020-01-03 05:00:27.308682
+22	22	4	9-11	2020-01-03 05:00:27.310476	2020-01-03 05:00:27.310476
+23	23	2	1-2	2020-01-03 05:00:27.312236	2020-01-03 05:00:27.312236
+24	24	5	5-7	2020-01-03 05:00:27.314032	2020-01-03 05:00:27.314032
+25	25	3	1-2	2020-01-03 05:00:27.315829	2020-01-03 05:00:27.315829
+26	26	3	3-4	2020-01-03 05:00:27.317576	2020-01-03 05:00:27.317576
+27	27	3	5-7	2020-01-03 05:00:27.319309	2020-01-03 05:00:27.319309
+28	28	3	5-6	2020-01-03 05:00:27.321129	2020-01-03 05:00:27.321129
+29	29	4	9-10	2020-01-03 05:00:27.322888	2020-01-03 05:00:27.322888
+30	30	2	1-2	2020-01-03 05:00:27.324707	2020-01-03 05:00:27.324707
+31	31	3	1-2	2020-01-03 05:00:27.32652	2020-01-03 05:00:27.32652
+32	32	2	3-4	2020-01-03 05:00:27.328313	2020-01-03 05:00:27.328313
+33	33	1	3-4	2020-01-03 05:00:27.330091	2020-01-03 05:00:27.330091
+34	34	2	7-8	2020-01-03 05:00:27.332063	2020-01-03 05:00:27.332063
+\.
+
+
+--
+-- Data for Name: courses; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY public.courses (id, name, course_code, course_type, teaching_type, exam_type, credit, limit_num, student_num, class_room, course_time, course_week, department, academic_year, semester, description, apply, teacher_id, created_at, updated_at) FROM stdin;
+1	计算机体系结构	091M4001H	专业核心课	课堂讲授为主	闭卷笔试	3.0	5	0	教1-107	60	2-20	9	2019-2018	秋		0	3	2020-01-03 05:00:19.204203	2020-01-03 05:00:19.204203
+2	计算机网络	091M4002H	专业核心课	课堂讲授为主	闭卷笔试	3.0	\N	0	教1-107	60	2-20\t	9	2019-2018	秋		0	4	2020-01-03 05:00:19.449803	2020-01-03 05:00:19.449803
+3	高级软件工程	091M4021H-1	一级学科核心课	授课、讨论\t	闭卷笔试	3.0	\N	0	教1-109	60	2-20	9	2019-2018	秋		0	5	2020-01-03 05:00:19.695638	2020-01-03 05:00:19.695638
+4	高级软件工程	091M4021H-2	一级学科核心课	授课、讨论\t	闭卷笔试	3.0	\N	0	教1-109	60	2-20	9	2019-2018	秋		0	6	2020-01-03 05:00:19.940424	2020-01-03 05:00:19.940424
+5	数理逻辑与程序理论	091M4023H	专业核心课	课堂讲授为主	闭卷笔试	3.0	\N	0	教1-113	60	2-20	9	2019-2018	秋		0	7	2020-01-03 05:00:20.185398	2020-01-03 05:00:20.185398
+6	计算机算法设计与分析	091M4041H	专业核心课	课堂讲授为主	闭卷笔试	3.0	\N	0	教1-101	60	2-20	9	2019-2018	秋		0	8	2020-01-03 05:00:20.43063	2020-01-03 05:00:20.43063
+7	模式识别与机器学习	091M4042H	专业核心课	课堂讲授为主	闭卷笔试	3.0	450	0	教1-102	60	2-20	9	2019-2018	秋		0	9	2020-01-03 05:00:20.676368	2020-01-03 05:00:20.676368
+8	高级人工智能	091M4043H	专业核心课	课堂讲授为主	闭卷笔试	3.0	\N	0	教1-107	60	2-20	9	2019-2018	秋		0	10	2020-01-03 05:00:20.921839	2020-01-03 05:00:20.921839
+9	VLSI测试与可测试性设计	091M5001H	专业普及课	课堂讲授为主	课堂开卷	2.0	\N	0	教1-109	40	2-16	9	2019-2018	秋		0	11	2020-01-03 05:00:21.166699	2020-01-03 05:00:21.166699
+10	超大规模集成电路基础	091M5004H	专业普及课	课堂讲授为主	课堂开卷	2.0	\N	0	教1-413	40	2-16	9	2019-2018	秋		0	12	2020-01-03 05:00:21.409436	2020-01-03 05:00:21.409436
+11	数据挖掘	091M5023H	专业普及课	课堂讲授为主	课堂开卷	2.0	450	0	教1-101	40	2-14	9	2019-2018	秋		0	13	2020-01-03 05:00:21.653965	2020-01-03 05:00:21.653965
+12	编译程序高级教程	091M5024H	专业普及课	课堂讲授为主	课堂开卷	2.0	\N	0	教1-108	40	2-18	9	2019-2018	秋		0	14	2020-01-03 05:00:21.898512	2020-01-03 05:00:21.898512
+13	操作系统高级教程	091M5025H	专业普及课	课堂讲授为主	课堂开卷	2.0	\N	0	教1-101	40	2-12\t	9	2019-2018	秋		0	15	2020-01-03 05:00:22.141725	2020-01-03 05:00:22.141725
+14	并发数据结构与多核编程	091M5026H	专业普及课	课堂讲授为主	课堂开卷	2.0	\N	0	教1-109	40	2-17	9	2019-2018	秋		0	16	2020-01-03 05:00:22.385351	2020-01-03 05:00:22.385351
+15	形式语言与自动机理论	091M5027H	专业普及课	课堂讲授为主	课堂开卷	2.0	\N	0	教1-113	40	2-17	9	2019-2018	秋		0	17	2020-01-03 05:00:22.629904	2020-01-03 05:00:22.629904
+16	人机交互	091M5041H	专业普及课	课堂讲授为主	课堂开卷	2.0	\N	0	教1-108	40	2-17	9	2019-2018	秋		0	18	2020-01-03 05:00:22.873893	2020-01-03 05:00:22.873893
+17	网络数据挖掘	091M5042H	专业普及课	课堂讲授为主	闭卷笔试	2.0	\N	0	教1-107	40	2-17	9	2019-2018	秋		0	19	2020-01-03 05:00:23.117322	2020-01-03 05:00:23.117322
+18	认知计算	091M6043H	专业研讨课	授课、讨论\t	读书报告	1.0	40	0	教1-123	20	2-12	9	2019-2018	秋		0	20	2020-01-03 05:00:23.361364	2020-01-03 05:00:23.361364
+19	可视化与可视计算	091M6045H	专业研讨课	授课、讨论\t	读书报告	1.0	40	0	教1-123	20	2-8,10-12\t	9	2019-2018	秋		0	21	2020-01-03 05:00:23.607796	2020-01-03 05:00:23.607796
+20	最优控制理论	092M4001H	专业核心课	课堂讲授为主	闭卷笔试	3.0	\N	0	教1-109	60	3-6,8-20	9	2019-2018	秋		0	22	2020-01-03 05:00:23.852583	2020-01-03 05:00:23.852583
+21	模式识别	092M4002H	专业核心课	课堂讲授为主	闭卷笔试	3.0	\N	0	教1-102	60	2-20	9	2019-2018	秋		0	23	2020-01-03 05:00:24.09849	2020-01-03 05:00:24.09849
+22	人工智能理论与实践	092M4022H	专业核心课	授课、讨论\t	闭卷笔试	3.0	\N	0	教1-109	60	2-20\t	9	2019-2018	秋		0	24	2020-01-03 05:00:24.342933	2020-01-03 05:00:24.342933
+23	图像处理与分析	092M4023H	专业核心课	课堂讲授为主	闭卷笔试	3.0	\N	0	教1-102	60	2-4,6-18	9	2019-2018	秋		0	25	2020-01-03 05:00:24.586082	2020-01-03 05:00:24.586082
+24	机器人学导论	092M5002H	专业普及课	课堂讲授为主	课堂开卷	2.0	\N	0	教1-109	40	2-16	9	2019-2018	秋		0	26	2020-01-03 05:00:24.829871	2020-01-03 05:00:24.829871
+25	矩阵分析与应用	092M5006H	专业普及课	课堂讲授为主	闭卷笔试	2.0	\N	0	教1-102	40	2-12	9	2019-2018	秋		0	27	2020-01-03 05:00:25.073546	2020-01-03 05:00:25.073546
+26	现代信息检索	092M5025H	专业普及课	课堂讲授为主	课堂开卷	2.0	\N	0	教1-109	40	2-12	9	2019-2018	秋		0	28	2020-01-03 05:00:25.318874	2020-01-03 05:00:25.318874
+27	随机过程	092M5026H	专业普及课	课堂讲授为主	读书报告	2.0	\N	0	教1-109	40	2-17	9	2019-2018	秋		0	29	2020-01-03 05:00:25.562405	2020-01-03 05:00:25.562405
+28	机器视觉及其应用	092M6001H	专业研讨课	授课、讨论\t	读书报告	1.0	40	0	教1-125	20	10-19	9	2019-2018	秋		0	30	2020-01-03 05:00:25.806709	2020-01-03 05:00:25.806709
+29	嵌入式系统	092M6002H	专业研讨课	课堂讲授为主	闭卷笔试	1.0	40	0	教1-115	20	2-12	9	2019-2018	秋		0	31	2020-01-03 05:00:26.050597	2020-01-03 05:00:26.050597
+30	计算机算法设计与分析	093M1002H-1	一级学科核心课	课堂讲授为主	闭卷笔试	3.0	220	0	教1-101	60	2-17	9	2019-2018	秋		0	32	2020-01-03 05:00:26.29385	2020-01-03 05:00:26.29385
+31	计算机算法设计与分析	093M1002H-2	一级学科核心课	讲课、上机	闭卷笔试	3.0	150	0	教1-108	60	2-17	9	2019-2018	秋		0	33	2020-01-03 05:00:26.536601	2020-01-03 05:00:26.536601
+32	计算机算法设计与分析	093M1002H-3	一级学科核心课	课堂讲授为主	闭卷笔试	3.0	220	0	教1-101	60	5-20\t	9	2019-2018	秋		0	34	2020-01-03 05:00:26.779563	2020-01-03 05:00:26.779563
+33	数据库新技术	093M2007H	一级学科普及课	课堂讲授为主	闭卷笔试	2.0	\N	0	教1-107	40	2-12	9	2019-2018	秋		0	35	2020-01-03 05:00:27.022033	2020-01-03 05:00:27.022033
+34	Python语言导论	09MGX005H	公共选修课	课堂讲授为主	课堂开卷	1.0	154	0	教1-108	40	4-14	9	2019-2018	秋		0	36	2020-01-03 05:00:27.265133	2020-01-03 05:00:27.265133
+\.
+
+
+--
+-- Data for Name: departs; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY public.departs (id, dept_name, dept_contact, dept_office, created_at, updated_at) FROM stdin;
+1	数学学院	1111101	办公楼101	2020-01-03 05:00:18.407144	2020-01-03 05:00:18.407144
+2	物理学院	1111102	办公楼102	2020-01-03 05:00:18.411333	2020-01-03 05:00:18.411333
+3	天文学院	1111103	办公楼103	2020-01-03 05:00:18.413183	2020-01-03 05:00:18.413183
+4	化学学院	1111104	办公楼104	2020-01-03 05:00:18.415045	2020-01-03 05:00:18.415045
+5	材料学院	1111105	办公楼105	2020-01-03 05:00:18.416897	2020-01-03 05:00:18.416897
+6	生命学院	1111106	办公楼106	2020-01-03 05:00:18.418557	2020-01-03 05:00:18.418557
+7	地球学院	1111107	办公楼107	2020-01-03 05:00:18.420202	2020-01-03 05:00:18.420202
+8	资环学院	1111108	办公楼108	2020-01-03 05:00:18.42187	2020-01-03 05:00:18.42187
+9	计算机与控制学院	1111109	办公楼109	2020-01-03 05:00:18.423563	2020-01-03 05:00:18.423563
+10	电子学院	1111110	办公楼110	2020-01-03 05:00:18.425293	2020-01-03 05:00:18.425293
+11	工程学院	1111111	办公楼201	2020-01-03 05:00:18.426924	2020-01-03 05:00:18.426924
+12	管理学院	1111112	办公楼202	2020-01-03 05:00:18.428611	2020-01-03 05:00:18.428611
+13	公共管理学院	1111113	办公楼203	2020-01-03 05:00:18.430368	2020-01-03 05:00:18.430368
+14	人文学院	1111114	办公楼204	2020-01-03 05:00:18.432035	2020-01-03 05:00:18.432035
+15	存济医学院	1111115	办公楼205	2020-01-03 05:00:18.433786	2020-01-03 05:00:18.433786
+16	微电子学院	1111116	办公楼206	2020-01-03 05:00:18.435461	2020-01-03 05:00:18.435461
+17	网络安全学院	1111117	办公楼207	2020-01-03 05:00:18.437319	2020-01-03 05:00:18.437319
+\.
+
+
+--
+-- Data for Name: grades; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY public.grades (id, course_id, user_id, grade, apply, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Data for Name: inform_articles; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY public.inform_articles (id, title, text, created_at, updated_at) FROM stdin;
+1	关于向海内外校友及社会各界征集校史资料的公告	\n\n（中国科学院大学40周年校庆公告002号）\n\n    2019年是中国科学院大学（简称“国科大”）建校四十周年，为客观记录和展示学校教育发展历程，探寻办学历史及文化内涵，全方位展示学校办学特色及育人成果，传承学校文化，弘扬学校传统，国科大决定筹建新校史馆，现向全体师生、离退休职工及家属、海内外校友和社会各界人士广泛征集校史资料。具体征集内容如下。\n\n一、基本要求\n\n    所提交的校史资料应尊重学校的历史事实，要求线索清晰、考证翔实、准确无误，能反映学校不同时期的办学历史和成就，展示学校的形象风貌和社会影响力。\n\n二、征集内容\n\n    1. 文字资料\n\n    （1）不同历史时期对学校建设和发展有重大影响的文件资料；\n\n    （2）各类重大活动、会议的新闻稿件和记录资料；\n\n    （3）具有历史意义的报告、批复、任命书、会议纪要等文件资料。\n\n    2. 图片资料\n\n    （1）曾经或目前在学校担任教师的中国科学院院士、中国工程院院士（以下简称“两院院士”）、曾就读于学校的“两院院士”等知名校友的图片（不小于350dpi），并附出生年月、籍贯、在学校担任教师或就读的起止年月、研究领域信息；\n\n    （2）历届毕业生合影照片、毕业纪念册、同学名录、师生间赠言、题录等；\n\n    （3）反映学校不同时期风貌的老照片；\n\n    （4）著名学者不同时期在学校授课的照片。\n\n    3. 影音资料\n\n    （1）国家级领导人调研指导工作的录音、影像资料；\n\n    （2）学校各类重大活动的录音、影像资料；\n\n    （3）“两院院士”在教学活动中的录音、影像资料；\n\n    （4）国内外著名学者及政要在学校开展、参与各类报告和活动的录音、影像资料。\n\n    4. 实物资料\n\n    （1）曾就读于学校的“两院院士”等知名历届校友的学籍资料，含学位证、毕业证、报考材料、成绩单、开题报告、中期考核报告、学位论文及各类学籍信息材料等；\n\n    （2）曾经或目前参加授课的“两院院士”的著作、手稿、笔记、聘书、教案、考卷及主编的教材等；\n\n    （3）学校师生在各时期参加的国家级重大科研项目所使用的仪器设备及相关模型等；\n\n    （4）学校师生在各时期获国家自然科学奖、国家技术发明奖和国家科技进步奖及其他重大奖项的获奖证书、奖杯等；\n\n    （5）学校办学早期制作或使用的教具、模型等；\n\n    （6）师生员工在校期间使用过的印章、校徽、校标、个人证件（如：工作证、学生证、借书证、毕业文凭、学位证书、毕业分配派遣证等）、纪念章、票证、录取通知书，及具有时代特色或代表性的作业本、笔记本等；\n\n    （7）单位或个人赠送给学校的反映重要活动的纪念品等；\n\n    （8）带有学校不同时期校名印记的物品等。\n\n    5. 其他资料\n\n    其他各类能反映学校教育历程及展示科教融合育人成果的校史资料。\n\n三、征集方式\n\n    1. 无偿捐赠：对有意将收藏的校史资料无偿捐赠给国科大者，国科大校史馆将颁发捐赠证书以作永志；\n\n    2. 有偿征集：对于一些具有历史价值、不可复制的实物资料，经专家鉴定、学校研究后可进行有偿征集；\n\n    3. 代管、复制：对特别珍贵的校史资料，如收藏者有意继续保存者，国科大可代为保管，或复制、翻拍后将原件安全归还。\n\n四、征集说明\n\n    1. 征集的校史资料，提供人可亲自送至国科大，国科大亦可上门接收，文字、图片、影音资料可邮寄或发送电子邮件到联系邮箱；\n\n    2. 图片和影音等资料请附简要的文字说明，含事件时间、地点、事项、主要参加人的姓名、时任职务、拍摄（提供）人姓名、现从事职业等信息；\n\n    3. 所征集的校史资料，由国科大校史馆统一造册、统一管理和展示；\n\n    4. 个人提供的校史资料，请提供人注明是否愿意捐赠，对于不便捐赠的校史资料，请在送交时明确说明，国科大将原件复制后退还提供人。\n\n    5. 所有征集的校史资料，均与提供人签订征集协议，注明征集方式等内容。\n\n五、征集时间\n\n    1. 常年征集反映学校教育历程及办学特色的校史资料；\n\n    2. 对于有意愿在国科大校庆活动日（2019年10月14日）展示的校史资料，请提供者于2019年3月16日前联系国科大校史馆或校友会办公室，办理送交手序。\n\n六、联系方式\n\n    联系人：宋老师\n\n    电  话：010-69671950\n\n    邮  箱：archives@ucas.edu.cn\n\n    地  址：中国科学院大学雁栖湖校区校史馆(北京市怀柔区怀北镇怀北庄380号 101408)    \n\n    联系人：孙老师\n\n    电  话：010-88256393\n\n    邮  箱：ucasaa@ucas.edu.cn\n\n    地  址：中国科学院大学玉泉路校区校友会办公室 (北京市石景山区玉泉路19号甲 100049)\n\n \n\n                        中国科学院大学\n\n                         2019年1月5日\n	2020-01-03 05:01:15.284662	2020-01-03 05:01:15.284662
+2	关于封闭考场的通告	\n\n    2019年全国硕士研究生入学考试将于2019年12月23-24日举行，我校是考点之一。\n\n    为保证国家教育考试的顺利进行，决定从2019年12月22日17：00开始至23日18：00，对中关村教学楼进行封闭；从12月22日17：00开始至24日18：00，对玉泉路教学楼（含辅楼阶梯教室）和人文楼进行封闭。封闭期间，与考试无关的人员一律不得进入封闭区域。\n\n    考试期间，禁止在考场及周围大声喧哗，禁止在考场周边组织文艺、体育、学术等群体活动。\n\n    特此通告\n\n                     中国科学院大学招生办公室\n\n                           2019年12月15日	2020-01-03 05:01:15.287322	2020-01-03 05:01:15.287322
+3	关于举行中国科学院大学2019级新生开学典礼的通知	\n\n各研究所：    中国科学院大学定于2019年9月10日（星期日）上午9:00，在雁栖湖校区图书馆楼前广场，举行2019级新生开学典礼。典礼由中科院副院长、国科大校长丁仲礼院士主持，中科院院长、国科大名誉校长白春礼院士出席并讲话。    建议京外研究所组织学生通过点击中国科学院大学中文网首页的飘窗收看开学典礼视频直播，或结合本单位实际情况自行组织开学典礼。    视频直播调试时间：2019年9月9日15:00至18:00，请各所测试收看效果，有问题及时反馈。特此通知。                   中国科学院大学                   2019年9月6日 \n	2020-01-03 05:01:15.289014	2020-01-03 05:01:15.289014
+4	2019年1月份医药费报销通知	\n\n门诊部定于近日进行2019年1月份医药费报销工作，具体时间安排如下：\n\n\n\n玉泉路校区\n\n离 退 休：  2019年1月16日、17日\n\n在职、学生：2019年1月9日、10日\n\n上午8:30～11:20；下午1:40～4:00\n\n报销地点：玉泉路校区门诊部（一号公寓一层东）\n\n\n\n中关村校区\n\n报销时间：2019年1月4日\n\n上午8:30～11:20；下午1:40～4:00\n\n报销地点：中关村校区医务室（6号楼西边平房）\n\n中关村离退休：2019年1月5日\n\n报销地点：中关村老年大学\n\n\n\n 雁栖湖校区\n\n学   生：2019年1月11日，2019年1月12日\n\n在职、离退休：2019年1月12日\n\n上午8:40～11:20    下午1:15～3:45\n\n报销地点：雁栖湖校区医务室二楼（邮局楼上）\n\n为减少学生报销等待时间，今后怀柔学生报销时间为两天，请同学们分别按规定的报销时间前往办理。医药费报销金额将于15日内打入个人建行账户中。\n\n注：报销时请持校园一卡通，并将报销单据按如下顺序整理：\n\n1、北京市门诊收费专用收据\n\n2、本次就诊处方\n\n3、急诊病历、转诊单\n\n4、如多次就诊请将单据按上述顺序整理，再按时间先后顺序排列整齐\n\n所有单据请不要折叠\n\n\n\n至此，2018年门诊医药费报销工作全部结束，请大家务必将2018年发生的医药费在此次及时报销，逾期不予报销!!\n\n                                                           门诊部\n\n                                                           2018年12月28日\n	2020-01-03 05:01:15.290625	2020-01-03 05:01:15.290625
+5	关于陈子涵同学申请转学的公示	\n\n关于陈子涵同学申请转学的公示\n\n\n\n        陈子涵，男，国科大2014级生物科学专业本科生，生源地为浙江省，高考成绩为712分。\n\n        陈子涵2014年9月入学后由于不适应北京的气候和环境，出现水土不服、身体不适等情况，故申请转学至浙江理工大学生物制药专业学习。\n\n        根据《普通高等学校学生管理规定》（教育部令第21号）、《教育部办公厅关于进一步规范普通高等学校转学工作的通知》（教学厅[2015]4号）和北京市教委相关规定，现将陈子涵的转学申请予以公示，公示时间从2018年12月5日8:00起至2018年12月10日17:00止。若对陈子涵转学有异议，请于2018年12月10日17:00前以书面形式向学生处反映，反映情况时应实事求是，并署真实姓名及联系方式。\n\n        联系人：尚颖\n\n        联系电话：88256139\n\n        电子邮箱：sao@ucas.ac.cn\n\n\n\n                                                            学生处\n\n                                                     二〇一六年十二月五日\n	2020-01-03 05:01:15.292547	2020-01-03 05:01:15.292547
+6	2018年12月份医药费报销通知 	\n\n门诊部定于近日进行2018年12月份医药费报销工作，具体时间安排如下：\n\n\n\n玉泉路校区\n\n离 退 休：  2018年12月27日、28日\n\n在职、学生：2018年12月20日、21日\n\n上午8:30～11:20；下午1:40～4:00\n\n报销地点：玉泉路校区门诊部（一号公寓一层东）\n\n\n\n中关村校区\n\n报销时间：2018年12月6日\n\n上午8:30～11:20；下午1:40～4:00\n\n报销地点：中关村校区医务室（6号楼西边平房）\n\n中关村离退休：2018年12月9日\n\n报销地点：中关村老年大学\n\n\n\n雁栖湖校区\n\n学   生：2018年12月13日，2018年12月14日\n\n在职、离退休：2018年12月14日\n\n上午8:40～11:20    下午1:15～3:45\n\n报销地点：雁栖湖校区医务室二楼（邮局楼上）\n\n为减少学生报销等待时间，今后怀柔学生报销时间为两天，请同学们分别按规定的报销时间前往办理。医药费报销将于15日内打入个人建行银行账号中，注意查收！\n\n注：报销时请持校园一卡通，并将报销单据按如下顺序整理：\n\n1、北京市门诊收费专用收据\n\n2、本次就诊处方\n\n3、急诊病历、转诊单\n\n4、如多次就诊请将单据按上述顺序整理，再按时间先后顺序排列整齐\n\n所有单据请不要折叠\n\n\n\n\n\n\n\n                                                           门诊部\n\n                                                           2018年11月30日\n	2020-01-03 05:01:15.294233	2020-01-03 05:01:15.294233
+7	关于北京市交通安全大检查的提示	\n\n近日，北京市公安局通知，北京市从11月10日开始为期60天的交通安全大检查。本次行动为全国交警集中查处酒驾，一经查获，一律拘役六个月，五年内不得考证。\n\n每月10，20，30日和每周五、六由厅带队检查，每月3，7，13，17，23日和每周五，六由市局组织检查，时间12：00-14：00，19：00-21：00\n\n从11月10日起，陆续启用高清摄像头，专拍前排驾乘人员不系安全带，开车使用手机等。请群里互相告知亲友以免被罚。小孩坐副驾。6分三百元！有车没车的都转一下！\n\n交通新规2018年11月10日实行：\n\n1. 闯红灯，记6分，罚200元。\n\n2 酒驾，记12分，5年内不得再考取驾照。\n\n3 不系安全带，记3分，罚200元。\n\n4 副驾驶不系安全带，记1分，罚50元。\n\n5 行驶中拨打手机，记3分，罚200元。\n\n6 行驶中抽烟，记1分，罚200元。\n\n7 有意遮挡号牌，记12分，顶额处罚。\n\n8 超速行驶，记6分。\n\n9 副驾驶有不满14岁乘坐的，记6分，罚300元。\n\n特此提示！2018年11月10日全国正式实行，请转告你身边的朋友！千万注意！\n\n　　　　　　　　　　　　　保卫处\n\n　　　　　　　　　　　2018年11月14日\n	2020-01-03 05:01:15.295863	2020-01-03 05:01:15.295863
+8	关于2016级非京籍本科生免费接种麻疹疫苗的通知	\n\n按照上级卫生部门的要求，近期由石景山区疾控中心及清华大学玉泉医院保健科来校为2016级本科新生进行麻疹疫苗强化免疫接种工作，具体安排如下：\n\n1．时间：2018年11月3日（周四）12:30-----15:00\n\n2．地点：二公寓多功能厅\n\n3．接种对象：五年内未接种过麻疹疫苗、无麻疹患病史、无接种禁忌症的非京籍同学。\n\n4．禁忌症：\n\n1.已知对该疫苗所含任何成分，包括明胶等辅料及抗生素如硫酸庆大霉素和硫酸卡那霉素过敏者；\n\n2.患急性疾病，严重慢性疾病、慢性疾病的急性发作期和发热者；\n\n3.免疫功能低下（经常感冒或得肺炎）者，或正在接受免疫抑制治疗者；\n\n4.曾患或正患多发性神经炎、格林巴利综合征、急性播散性脑脊髓炎、脑病，未控制的癫痫等严重神经系统疾病，或其他进行性神经系统疾病者。\n\n5.注意事项：\n\n●被接种者在接种前不要空腹和过度疲劳，防止在接种时出现低血糖现象。\n\n●在接种后，注意留观30分钟。\n\n●接种后当天不要参加剧烈的运动和体力劳动，多饮水。\n\n●接种后当日不要洗澡，尽量不要喝酒、吃辛辣食物，以防身体出现不适。\n\n●极少数人接种后可能出现接种部位红肿或发热或过敏反应等，如出现任何不适症状，应及时到校卫生所就诊。\n\n接种本着自愿的原则，请符合接种条件的本科生认真阅读、规范填写知情同意书，接种当日将知情同意书交至医务人员。\n\n\n\n                                      卫生所\n\n                                   2018年10月31日\n	2020-01-03 05:01:15.297479	2020-01-03 05:01:15.297479
+9	转发：中国教育国际交流协会2016博士生招生面试交流会的通知 	有关单位：\n\n由中国教育国际交流协会主办的第八届2016博士生招生面试交流会/PhD Workshop China 2016将分别于2018年11月19日-20日在北京喜来登长城饭店和11月22日在上海花园饭店举办。\n\n该交流会的宗旨是为有志出国攻读博士的中国学生和国外招收博士生的学校和导师搭建一个交流、沟通与面试的平台，让双方利用这个面对面交流的机会，使海外院校代表能够向中国学生介绍博士生学科项目、专业申请知识、奖学金项目，并现场指导申请程序、进行面试等；同时，国内学生也能获得权威、全面、丰富、专业、准确的博士留学信息。\n\n截至目前，来自澳大利亚、比利时、加拿大、法国、德国、日本、新加坡、荷兰、土耳其、英国等10多个国家近80所著名大学及研究单位的博士研究生院参会(院校名单详见: www.phdchina.org/phd/english/visitor/list.html)，预计还将有来自斐济、美国等其他国家的院校参会。\n\n届时将有驻华使领馆教育官员以及160多位院校博士生招生主管、教授和导师现场向中国学生详解各自学校和院系的博士生招生、资助、奖学金申请、学科专业申请等问题。同时，参会外方大学和博士研究生院也有意与国内高校研究生院建立联系，探讨人才培养和科研合作的可能性,共谋高等教育进步与发展。\n\n所有国内老师和学生均免费入场参会（食宿、交通费须自理），参加现场举办的院校讲座，并与海外院校教授、老师一对一面试和交流，获得更多权威、真实的读博信息。同时，我们诚挚的邀请贵校负责国际交流、研究生院的老师参会，和海外院校的教授、老师们面对面交流和探讨校际合作。\n\n作为目前国内高层次校际配对合作国际化平台和不出国的见面交流机会，为确保国内院校代表、学生和海外院校代表的现场会谈效果，所有参会老师和学生需提前注册，具体方式：\n\n一、登录www.phdchina.org 点击“参会观众”分别提前在线注册，或关注微信公众号：博士生交流会；\n\n二、实现在线注册以及与海外院校代表的会见联系和确认；\n\n三、凭打印出的参会确认函邮件入场参会。注册截止日期：2018年11月15日。\n\n如有其他问题，请咨询本次交流会办公室：\n\n电  话：010-8580 0787/91/90\n\n联系人：周老师 党老师	2020-01-03 05:01:15.299224	2020-01-03 05:01:15.299224
+10	关于2019级本科新生进行结核菌素试验的通知 	按照上级部门的要求，需在本科新生中进行结核菌素试验。经与石景山区疾控中心协商，定于 9 月 26 日（周一）由石景山区结核病防治所来我校为2016级本科新生进行结核菌素试验工作，具体安排如下：\n\n1..时间： 2018年 9 月 26 日 11:30-----13:30\n\n2. 地点 ：二公寓多功能厅\n\n3  接种对象：2016级本科生新生\n\n4. 禁忌症：\n\n⑴体温超过38℃。\n\n⑵曾患过结核病。\n\n⑶正在使用免疫抑制剂的，如地塞米松、氢化考地松。\n\n进行结核菌素试验者请务必于9月28日13:30--16：30或9月29日8:00--11:30在卫生所看皮试结果。\n\n请同学们务必按照上述时间参加此项检查。\n\n\n\n                                         卫生所\n\n                                      2018年9月23日	2020-01-03 05:01:15.301141	2020-01-03 05:01:15.301141
+11	国科大关于2019年下半年全国大学英语考试四六级报名的通知 	\n\n2018年下半年全国大学英语四六级考试\n\n中国科学院大学考点报名通知\n\n\n\n根据教育部考试中心及北京市教育考试指导中心部署，现将本次我校2018年下半年大学英语四、六级考试报名工作的具体安排通知如下：\n\n\n\n一、考试时间及地点\n\n大学英语四级考试（CET4）:2018年12月17日上午9:00 – 11:20；\n\n大学英语六级考试（CET6）:2018年12月17日下午15:00 –17:25；\n\n考试地点：中国科学院大学玉泉路校区。\n\n\n\n二、报名要求\n\n1. 中国科学院大学全日制在校学生；\n\n2. 大学英语四级考试（CET4）成绩达到425分以上（含425分）的学生才可报考六级；\n\n3. 只能报考一种类型，不能同时报考英语四、六级考试；\n\n4. 2018年6月参加六级考试的学生（包括通过、未通过、无故缺考、网上报名成功但不缴费的），本次不能报考六级考试。\n\n5. 非全日制在校研究生、非国科大学籍的研究生请勿报名。\n\n\n\n三、名额分配及排序\n\n1.因学校考位有限，仅有750个考位。根据2018年上半年六级考试通过率情况，六级报考名额中为2014级本科生分配50名，2015级200名，研究生分配500名。报考四级本科生优先。\n\n2.本科生报考六级考试按年级分别以四级考试分数高低排序。\n\n3.研究生报考四六级考试按以下原则进行排序：高年级优先，一年级京外研究所学生优先，同等条件下按报名信息网上提交的时间先后进行排序。\n\n4.同等条件下依照报名系统有效报名信息提交的先后顺序排序。\n\n5.请已经通过六级的同学发扬“孔融让梨”的精神，把机会留给更急需的同学。最终准许报考的学生名单将在学校网站公示。\n\n\n\n四、考试费用\n\n按北京市教育考试指导中心文件规定，报名考试费四级15元/人，六级17元/人。\n\n\n\n五、报名时间与方法：\n\n（一）网上报名时间（9月23日10:00—9月26日10:00）。\n\n（二）报名方法\n\n1.报名学生登录国科大教育业务平台（www.sep.ucas.ac.cn），选择“四六级报名”模块，按照系统要求步骤完成报名。\n\n2.报名学生务必确认报名信息及选择的考试级别正确无误，信息一旦提交便无法进行修改。\n\n3.报名学生上传的本人照片要求浅蓝色背景，照片最小像素为192×144（高×宽），成像区大小为48mm×33mm（高×宽），存储为JPG格式，文件大小在20K-500K。图像文件名必须为本人学号，即XXX.jpg，学号中如果有字母必须为大写。未提交照片或照片不符合上述要求的学生将视为报名不成功。\n\n4.报考六级的研究生需要上传四级成绩证明照片，图像应真实、清晰，文件大小不超过2M。\n\n\n\n六、现场确认及缴费安排\n\n（一）学生完成网上报考信息提交后，学生处将对报名信息进行初审和排序，根据考位数量公示初审通过的名单。公示无异议后，初审通过的学生将允许进行现场确认和缴费。请报名学生注意查看报名系统的通知公告。具体确认时间、地点另行通知。\n\n（二）现场确认环节将完成考生报名材料核验，核验材料包括考生本人身份证、学生证，报考CET6的学生还须现场核验CET4成绩证明。\n\n\n\n七、注意事项\n\n1．鉴于学校考场资源紧张，目前仅有750个考位，敬请各位同学能慎重报名。\n\n2．网上报名成功后必须完成现场确认及缴费环节后报名才最终有效。\n\n3. 凡未通过国家英语四级考试的考生不能参加六级考试，一经发现，取消考试资格。\n\n4. 四级成绩证明原件丢失的学生，可在教育部考试中心综合查询网（http://chaxun.neea.edu.cn/examcenter/main.jsp）补办成绩证明。成绩证明在参加考试时也需要出示，请及时办理。\n\n\n\n\n\n\n\n\n\n                                                 学生处\n\n                                          二〇一六年九月二十日\n	2020-01-03 05:01:15.302736	2020-01-03 05:01:15.302736
+12	关于开通玉泉路校区至中关村校区学生市内摆渡车的通知 	校属各单位、校机关各部门：\n\n         根据校领导指示，从2018年9月5日起开通玉泉路校区及中关村校区间早晚学生市内摆渡车，现就有关事项通知如下：\n\n        一、发车时间及路线\n\n        （一）每周一至周四\n\n           1、07:10 玉泉路校区（学生班车点）——科学院南路北口东侧——发育所\n\n           2、18:30 发育所（南门）——国科图18:40——玉泉路校区\n\n        （二）每周五\n\n          1、07:10 玉泉路校区（学生班车点）——科学院南路北口东侧——发育所\n\n          2、18:30 发育所（南门）——国科图18:40——玉泉路校区\n\n          3、21:50 青年公寓——国科图21:55——玉泉路校区\n\n        （三）每周六、周日\n\n          1、07:30 玉泉路校区（学生班车点）——科学院南路北口东侧——发育所\n\n          2、18:00 发育所（南门）——国科图18:10——玉泉路校区\n\n        二、本条线路9月5日至9月30日进行试运营，试运营期间学生可直接乘车，不需约票或刷卡缴费乘车。\n\n        三、本条线路在学校寒暑假、国家法定节假日期间停开。\n\n         特此通知。\n\n                                                    校办公室  车队\n\n                                                   2018年8月31日	2020-01-03 05:01:15.304594	2020-01-03 05:01:15.304594
+13	关于开通雁栖湖校区至后沙峪地铁站往返班车的通知 	校属各单位、校机关各部门：\n\n    根据校领导指示，为解决教工班车时间之外的乘车需求，避开交通拥堵路段缩短教工乘车时间，为大家提供更快捷便利的乘车服务，学校决定开通雁栖湖校区至后沙峪地铁站往返教工班车（学生可乘坐）。\n\n    后沙峪地铁站属地铁15号线，位于机场北线枯柳树桥西南方2公里处。距雁栖湖校区50公里，乘车时间45分钟左右；距望京西地铁站7站地，距北沙滩地铁站12站地，距知春路地铁站15站地，交通十分便利。\n\n    现将有关事项通知如下：\n\n    一、具体时间及站点：\n\n    1. 每周一至周五上午\n\n       8:30 雁栖湖西区班车点——后沙峪地铁站D口\n\n       9:40 后沙峪地铁站D口——雁栖湖西区班车点\n\n    2. 每周一至周五下午\n\n       14:00 雁栖湖西区班车点——后沙峪地铁站D口\n\n       15:10 后沙峪地铁站D口——雁栖湖西区班车点\n\n    二、上述线路班车自9月5日起开始运行，寒暑假、周六日及国家法定节假日期间停开。\n\n    特此通知。	2020-01-03 05:01:15.306252	2020-01-03 05:01:15.306252
+14	关于统计2019年中秋节国庆节慰问品的通知 	\n\n校属各单位、各部门工会小组：\n\n    2018年中秋节国庆节即将到来，为做好“节日慰问品”发放工作，计划分别在雁栖湖校区、玉泉路校区、中关村青年公寓、中关村教学楼四处发放，现将有关事宜通知如下：\n\n    一、享受范围：\n\n     1．在编职工会员\n\n     2．学校聘用职工会员\n\n     3．非在职博士后会员\n\n     4．劳务派遣职工会员\n\n    5. 部门聘用职工会员\n\n    注：本校离退休职工的慰问品由离退办统计发放，请不要在此统计。\n\n    二、不享受人员\n\n    1．会员长期出国（已停发工资）\n\n     2．2018年8月15日前调离学校的会员\n\n     3. 在职博士后\n\n    三、本次“节日慰问品”分为两组，由会员选定其中一组：\n\n    第一组： 食用油、大米等生活食品\n\n    第二组： 牛奶、干果等即时食用食品\n\n    四、统计领取地点\n\n    为了方便会员领取慰问品，请各单位统计每位会员领取的地点，填报“2018年中秋节国庆节慰问品登记表”，于9月8日前将登记表电子版发至工会jiangchuan@ucas.ac.cn邮箱。\n\n     “2018年中秋节国庆节慰问品登记表”请见附件。\n\n\n\n\n\n                                     教代会(工会) 办公室\n\n                                    二〇一六年八月三十一日\n	2020-01-03 05:01:15.307874	2020-01-03 05:01:15.307874
+15	2019年研究生新生入学体检通知（雁栖湖校区）	 定于8月30日（周二）至9月5日（周一）进行2016级研究生新生入学体检工作，具体安排如下：\n\n一、参加人员：2019级雁栖湖校区全体研究生新生\n\n二、时间安排：\n\n时 间\n\n\n院  系\n\n8月30日（周二）\n\n\n各院系无英语考试新生\n\n8月31日（周三）\n\n\n各院系新生（开学典礼前、后）\n\n9月1日（周四）\n\n\n数学学院、化学学院、材料学院、地学院、工学院、外语系\n\n9月2日（周五）\n\n\n京外不回所新生\n\n9月3日（周六）\n\n\n未来技术学院、资环学院、存济医学院、计算机学院、电子学院、人文学院\n\n9月4日（周日）\n\n\n物理学院、天文学院、生命学院、微电子学院、经管学院、公管学院、网络空间安全学院\n\n9月5日（周一）\n\n\n未参加体检的新生\n\n三、项目：1.抽血：（需空腹）上午7:30--11:00\n\n          2.胸片：上午7:30--11:30；下午13:00--15:00\n\n四、地点：雁栖湖校区东区礼堂一层\n\n注意事项：\n\n1、请务必携带校园一卡通、新生报到清单。\n\n2、刷校园一卡通打印抽血和胸片申请单。\n\n3、体检前日晚忌进油腻食物，禁饮酒，保证休息，体检当日早晨禁食。\n\n4、拍片时不穿有金属纽扣、亮片等装饰的衣服，不要带项链等饰品。\n\n5、因故不能在安排当日体检者，可在体检日期内择日参检。\n\n6、请务必在上述体检日期内完成体检，体检结束后不再安排补检。\n\n                                   门诊部\n\n                               2018年8月26日	2020-01-03 05:01:15.309862	2020-01-03 05:01:15.309862
+\.
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY public.schema_migrations (version) FROM stdin;
+20180114095532
+20170105024509
+20161215121319
+20170101095517
+20161215121514
+20161215121045
+20160909105514
+20161215121614
+20161215121242
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY public.users (id, name, email, num, major, department, student_class, reset, password_digest, remember_digest, admin, teacher, created_at, updated_at, reset_digest, reset_sent_at) FROM stdin;
+1	计算机与控制学院管理员	admin@test.com	20198008629001	计算机软件与理论	9	\N	\N	$2a$12$0s0GwOKWAR4rWLRdRjC0fOUuOBcdjPa7/goKm0YlZtohURQlthkhW	\N	t	f	2020-01-03 05:00:18.698797	2020-01-03 05:00:18.698797	\N	\N
+2	李华	lijiaoyang19@mails.ucas.ac.cn	201928008629001	计算机技术	9	\N	\N	$2a$12$V4O2d8HkEnPtz.dz.JZ5pu1NOCHT7Whn3nI8UoV9BBxChkbA71126	\N	f	f	2020-01-03 05:00:18.941967	2020-01-03 05:00:18.941967	\N	\N
+3	胡伟武	teacher1@test.com	\N	\N	9	\N	f	$2a$12$yJXIPJhzVvPDV/C43iRz.umPeBEikTS89o0xQBlfEsAkYJjfk/SmK	\N	f	t	2020-01-03 05:00:19.184437	2020-01-03 05:00:19.184437	\N	\N
+4	谢高岗	teacher2@test.com	\N	\N	9	\N	f	$2a$12$9baW/OQHTTupQcC3FmmjYeuNkriHbIYY9hl9jUgWWxo6xQSuVItey	\N	f	t	2020-01-03 05:00:19.446564	2020-01-03 05:00:19.446564	\N	\N
+5	魏峻	teacher3@test.com	\N	\N	9	\N	f	$2a$12$bPg/EFZbFsyzm.mv5vAyiOhCnNVAZkzBisrFXvre1dCgnFIp08q7u	\N	f	t	2020-01-03 05:00:19.692382	2020-01-03 05:00:19.692382	\N	\N
+6	罗铁坚	teacher4@test.com	\N	\N	9	\N	f	$2a$12$qSxIbfhEf7RIfB8pmnGLfOdjU8UMkkvZGJnBpgREw.mcPPEhc7lS2	\N	f	t	2020-01-03 05:00:19.937217	2020-01-03 05:00:19.937217	\N	\N
+7	眭跃飞	teacher5@test.com	\N	\N	9	\N	f	$2a$12$fN2EruGeXYscDbqeYKJfcejrvHn8Eu3qzwVCGzKpxRxIMQY1iOJsy	\N	f	t	2020-01-03 05:00:20.182073	2020-01-03 05:00:20.182073	\N	\N
+8	卜东波	teacher6@test.com	\N	\N	9	\N	f	$2a$12$fSeydB1uVhtrzwp9fM4wP.F4K1sLefKoF.958x9L1UZYoWicoTGNK	\N	f	t	2020-01-03 05:00:20.427349	2020-01-03 05:00:20.427349	\N	\N
+9	黄庆明	teacher7@test.com	\N	\N	9	\N	f	$2a$12$vdb0qLATz6OgZg0cv19hB.VdsPrpvTqFkXnBpzD2p2m8FKrbN226a	\N	f	t	2020-01-03 05:00:20.673	2020-01-03 05:00:20.673	\N	\N
+10	程学旗	teacher8@test.com	\N	\N	9	\N	f	$2a$12$AJQaW8qvU6iBQml5IOhbHuOG5H9wkjj8Fn1/o.GQHf4mjLCT1G6XC	\N	f	t	2020-01-03 05:00:20.918544	2020-01-03 05:00:20.918544	\N	\N
+11	李晓维	teacher9@test.com	\N	\N	9	\N	f	$2a$12$SHiOQXxY31LZs8cJ4NxYROliw8/iXghNmmzQVyHT1f9kqv1fiaqo.	\N	f	t	2020-01-03 05:00:21.163563	2020-01-03 05:00:21.163563	\N	\N
+12	齐洪钢	teacher10@test.com	\N	\N	9	\N	f	$2a$12$Vx.ARkTLZw3LmMZqllXBOetyUzGJhbQHemZDw3h9TvrWnQ3Fu1gtS	\N	f	t	2020-01-03 05:00:21.40609	2020-01-03 05:00:21.40609	\N	\N
+13	刘莹	teacher11@test.com	\N	\N	9	\N	f	$2a$12$7nuW8LfIjYpgZg73cTipLuJue2CCFjkiRS.LJ5sCzHBhdsv6zWgK.	\N	f	t	2020-01-03 05:00:21.650641	2020-01-03 05:00:21.650641	\N	\N
+14	冯晓兵	teacher12@test.com	\N	\N	9	\N	f	$2a$12$dU2PSvJLRZ6qBw72aMM.5O4mTwM6domK3qrliXc0No3DkmCURBOBq	\N	f	t	2020-01-03 05:00:21.895133	2020-01-03 05:00:21.895133	\N	\N
+15	杨力祥	teacher13@test.com	\N	\N	9	\N	f	$2a$12$TonhzAN7Q1rYmcSLIc6uDeyHVodFTmCVO4gWOURcsaTG3HlL7U4zy	\N	f	t	2020-01-03 05:00:22.138557	2020-01-03 05:00:22.138557	\N	\N
+16	林惠民	teacher14@test.com	\N	\N	9	\N	f	$2a$12$PqjcTwPG4Ur3.PDld2nAZux/wT4f1sLgw6uzrQ5M9bDfPFP/bE3te	\N	f	t	2020-01-03 05:00:22.382098	2020-01-03 05:00:22.382098	\N	\N
+17	姚刚	teacher15@test.com	\N	\N	9	\N	f	$2a$12$frJgdmWfWwNErNKKaE5kWe0P7piq1oBdOPGwCGTbRetN1d5G2Dc36	\N	f	t	2020-01-03 05:00:22.626469	2020-01-03 05:00:22.626469	\N	\N
+18	王宏安	teacher16@test.com	\N	\N	9	\N	f	$2a$12$fk.4xATbCI7JFt4uDi7cmOQ4RFkawwrQfx5unOcPNzQVpajkOf.9G	\N	f	t	2020-01-03 05:00:22.870432	2020-01-03 05:00:22.870432	\N	\N
+19	徐君	teacher17@test.com	\N	\N	9	\N	f	$2a$12$65r99H2LejUa1wr/TAbbBOSfB76xMMxgxudVKzjY18ejzBeMBZLjW	\N	f	t	2020-01-03 05:00:23.11406	2020-01-03 05:00:23.11406	\N	\N
+20	何清	teacher18@test.com	\N	\N	9	\N	f	$2a$12$QO3Wd.8UV2dUDQO3dtdP0.V3PvLCDUstUsDxBBCIbOU.8QV6nPWFW	\N	f	t	2020-01-03 05:00:23.357972	2020-01-03 05:00:23.357972	\N	\N
+21	时磊	teacher19@test.com	\N	\N	9	\N	f	$2a$12$Lxe6TkA4FIjpDuA911OzfudHbNuvS/ilRAo18Az6WAHEoPgduRv5m	\N	f	t	2020-01-03 05:00:23.604566	2020-01-03 05:00:23.604566	\N	\N
+22	王飞跃	teacher20@test.com	\N	\N	9	\N	f	$2a$12$VDVdsXxe9x3DxDY1tI1zQ.56q5wQ.eOyAAew/BSTeN.glAX/OFeui	\N	f	t	2020-01-03 05:00:23.849258	2020-01-03 05:00:23.849258	\N	\N
+23	刘成林	teacher21@test.com	\N	\N	9	\N	f	$2a$12$.7cSVv5jbfdZUxce/5YU7OzbK.OdPWoVEiyodR2SxCQXbM69IuUgm	\N	f	t	2020-01-03 05:00:24.095019	2020-01-03 05:00:24.095019	\N	\N
+24	张文生	teacher22@test.com	\N	\N	9	\N	f	$2a$12$hOYtGjnExklEqvEzPOvcwOj8bJWo3LTX68xJScn2D4lKKTY/Xnr6.	\N	f	t	2020-01-03 05:00:24.339676	2020-01-03 05:00:24.339676	\N	\N
+25	王伟强	teacher23@test.com	\N	\N	9	\N	f	$2a$12$yRR7LIeyLSpeCLzszcVqKeTIYtZlqBqRkcspj.W4TMOrekuySzFry	\N	f	t	2020-01-03 05:00:24.582728	2020-01-03 05:00:24.582728	\N	\N
+26	徐德	teacher24@test.com	\N	\N	9	\N	f	$2a$12$DVIO1gMy/teJ2ti47nWGVOwHk0AAJtm./7t2e65YudGOTaUKPEhbW	\N	f	t	2020-01-03 05:00:24.826642	2020-01-03 05:00:24.826642	\N	\N
+27	李保滨	teacher25@test.com	\N	\N	9	\N	f	$2a$12$358XKZmLa2cbqzZLNZzzzuj4ws5Zx1YJ0OuvRc3PQK2ZcBt7vQIty	\N	f	t	2020-01-03 05:00:25.070173	2020-01-03 05:00:25.070173	\N	\N
+28	何苯	teacher26@test.com	\N	\N	9	\N	f	$2a$12$eOgfAvUAdxoYf2tT6eqc8Oh4IDFnVtNvM8KRpevSdKZCYq6CXQLaK	\N	f	t	2020-01-03 05:00:25.315522	2020-01-03 05:00:25.315522	\N	\N
+29	张颢	teacher27@test.com	\N	\N	9	\N	f	$2a$12$gfzHExbaBLOLhvw9Y1h8Y.0Nwk41G48RDf3JIRvubEsoBszZys9ya	\N	f	t	2020-01-03 05:00:25.559167	2020-01-03 05:00:25.559167	\N	\N
+30	刘智勇	teacher28@test.com	\N	\N	9	\N	f	$2a$12$y3uSjs47LVCYmhmhylNFfOwXxL9rbpVOa2IIHZ.qLFVit9HkhYAke	\N	f	t	2020-01-03 05:00:25.803573	2020-01-03 05:00:25.803573	\N	\N
+31	赵军锁	teacher29@test.com	\N	\N	9	\N	f	$2a$12$CGXybW8ML9F/lz4Orm74P.eTFrfyPoliWNd9wecvXZGl6msnNI1KW	\N	f	t	2020-01-03 05:00:26.047389	2020-01-03 05:00:26.047389	\N	\N
+32	陈玉福	teacher30@test.com	\N	\N	9	\N	f	$2a$12$pZ63ByOrjjrW2Hp1dvMrNO0ouzSo2zK2/Xcpdax0J/COXhZjHkTFu	\N	f	t	2020-01-03 05:00:26.290592	2020-01-03 05:00:26.290592	\N	\N
+33	刘玉贵	teacher31@test.com	\N	\N	9	\N	f	$2a$12$MDOPxarsA/xQ0Lfl2y/XyeAud1oNkVwbSAvGgOp209Fisk2ydNgJS	\N	f	t	2020-01-03 05:00:26.533518	2020-01-03 05:00:26.533518	\N	\N
+34	王文杰	teacher32@test.com	\N	\N	9	\N	f	$2a$12$O4c4abZ9gcjqCBgUi2YYIuRVVLLn8M7y8vcED6bAvamfnH5QwzV.2	\N	f	t	2020-01-03 05:00:26.776288	2020-01-03 05:00:26.776288	\N	\N
+35	苏桂平	teacher33@test.com	\N	\N	9	\N	f	$2a$12$G4fOYzdfuw5aPPdKhd7jReSSbj.2sGu29K0UAVCcSYY1GCZj2mfly	\N	f	t	2020-01-03 05:00:27.018681	2020-01-03 05:00:27.018681	\N	\N
+36	张晋连	teacher34@test.com	\N	\N	9	\N	f	$2a$12$OYayx7kaYPCN8GJhAqp6Y.tHRgqS1ueEj8vD2DRhBNSNz6Raq1Ggi	\N	f	t	2020-01-03 05:00:27.26191	2020-01-03 05:00:27.26191	\N	\N
+37	司兆乔	student1@test.com	201995732738209	光学工程	5	20190713	f	$2a$12$3jzsOGRALGg5qgldbIlZ9.QyrYja.EvaA9/PJy3U/XRY2DSpWjPzm	\N	f	f	2020-01-03 05:00:27.570062	2020-01-03 05:00:27.570062	\N	\N
+38	戴正孝	student2@test.com	201913485299607	控制科学与工程	9	20190713	f	$2a$12$4jUdVk4bUL.v5WzdGYlECODfSHndDct3KQorflwCzUPLxrooF9ECi	\N	f	f	2020-01-03 05:00:27.811721	2020-01-03 05:00:27.811721	\N	\N
+39	骑珮康	student3@test.com	201984780131211	软件工程	9	20190713	f	$2a$12$k7Gw9InyWPOEkgG34Pz3u.n5U9hh1EHVfxXMkVd0UGE4xgqVVKore	\N	f	f	2020-01-03 05:00:28.05071	2020-01-03 05:00:28.05071	\N	\N
+40	俞元城	student4@test.com	201919221231422	物理学	2	20190713	f	$2a$12$P7079jKmqktyxt0O/yzwqeCwS5iiqEHoxMTFu6HEIsOBeinyNQ1/S	\N	f	f	2020-01-03 05:00:28.29114	2020-01-03 05:00:28.29114	\N	\N
+41	麻中伟	student5@test.com	201970839376893	天文学	3	20190713	f	$2a$12$zVsfz0hKbBBURHXU6Jg2jeMbFbJYnmemRo1XKpsWHZuZAhGUAOWci	\N	f	f	2020-01-03 05:00:28.531066	2020-01-03 05:00:28.531066	\N	\N
+42	穰妤治	student6@test.com	201933370413160	网络空间管理	17	20190713	f	$2a$12$su8AVMu23L2ZyV0igmU4zuPVDSJZHzOypD/yPLkmG40LBIeHT/Gui	\N	f	f	2020-01-03 05:00:28.771796	2020-01-03 05:00:28.771796	\N	\N
+43	赤季虹	student7@test.com	201970872967599	统计学	1	20190713	f	$2a$12$WL6yHlodpv0l0Exe1G6Gdu3J3IL4LzqRbVNZY2iOfqeQF4wb4J.1u	\N	f	f	2020-01-03 05:00:29.012588	2020-01-03 05:00:29.012588	\N	\N
+44	通宛泉	student8@test.com	201967904540486	控制科学与工程	9	20190713	f	$2a$12$x59Plov/Tw19rG2rftQhlu1uRS9WByo.w.QmgefWu2izUUVPSKCXW	\N	f	f	2020-01-03 05:00:29.254028	2020-01-03 05:00:29.254028	\N	\N
+45	寒丰恬	student9@test.com	201917143227367	集成电路工程	16	20190713	f	$2a$12$NB3WEWGowdYeihpKRDOeqe6dZ7PpiSlbqBS6XQUQ5BSYVDqqr2duq	\N	f	f	2020-01-03 05:00:29.494217	2020-01-03 05:00:29.494217	\N	\N
+46	定昀能	student10@test.com	201928889717307	土木工程	11	20190713	f	$2a$12$0mwNGDTwsPltHyieMLkFt.S6e8tZqi4fsXtEF/8kcmeaPritGTwga	\N	f	f	2020-01-03 05:00:29.735771	2020-01-03 05:00:29.735771	\N	\N
+47	崔冰雅	student11@test.com	201984850667537	生物学	6	20190713	f	$2a$12$bxpzc1Nmg38DTlgynezMLO6XarKwUoMJE479RNrxcUXar4UczfnQS	\N	f	f	2020-01-03 05:00:29.977294	2020-01-03 05:00:29.977294	\N	\N
+48	夷妍茜	student12@test.com	201960935245283	物理学	2	20190713	f	$2a$12$2V6kqr0g5HIpCT43gUgmaOp5bCVaVmQ4gNqDIzkuM1NbfVwMRnV6C	\N	f	f	2020-01-03 05:00:30.219106	2020-01-03 05:00:30.219106	\N	\N
+49	犹洁安	student13@test.com	201919278461960	材料科学与工程	5	20190713	f	$2a$12$wmzCtPYcGt12gKgbVGFxjuwVGf9kmcsKwJsn2.9WeQBKAeBUaPaV6	\N	f	f	2020-01-03 05:00:30.460579	2020-01-03 05:00:30.460579	\N	\N
+50	烟清妤	student14@test.com	201943944154639	生物学	6	20190713	f	$2a$12$//h6VMVmKydQMxcfv.1qDuA/N7D9lBngf4OzOtY85cXV4baVzcC/6	\N	f	f	2020-01-03 05:00:30.702196	2020-01-03 05:00:30.702196	\N	\N
+51	喻佐谕	student15@test.com	201919151923771	动力工程及工程热物理	11	20190713	f	$2a$12$cKvqaIvo.eo8VzKE4Vei/etADT3XjcrW9l1f9uVYGNX37.JxHYmCC	\N	f	f	2020-01-03 05:00:30.943844	2020-01-03 05:00:30.943844	\N	\N
+52	边延欣	student16@test.com	201970841961447	动力工程及工程热物理	11	20190713	f	$2a$12$LuynKHPZM4sgAnL2GXRoaOlTErTFAugvqZALRGu8xZM5WYUX7Tpz.	\N	f	f	2020-01-03 05:00:31.184719	2020-01-03 05:00:31.184719	\N	\N
+53	卓富梅	student17@test.com	201945492496568	核科学与技术	2	20190713	f	$2a$12$H8HtKzIJq1GoDcRqEzdcGuyeCEyQkrLVpNi.aL4QuPfC3N8SjwcPW	\N	f	f	2020-01-03 05:00:31.426027	2020-01-03 05:00:31.426027	\N	\N
+54	司空仁行	student18@test.com	201928017739416	力学	11	20190713	f	$2a$12$WeO.DbYCabuoqNovOgwdO.iK0T8Yxbj/R0zntgAW2Hggb.UFdc/t6	\N	f	f	2020-01-03 05:00:31.667235	2020-01-03 05:00:31.667235	\N	\N
+55	兆正孝	student19@test.com	201991107883483	光学工程	5	20190713	f	$2a$12$nU3/EChdF.fEnRjcCvYPCOX1tvewdH/Bmv06lzbepxbiEos.OONCS	\N	f	f	2020-01-03 05:00:31.908136	2020-01-03 05:00:31.908136	\N	\N
+56	郸萱俐	student20@test.com	201982233934265	海洋科学	7	20190713	f	$2a$12$qsQy2s5yaDUSJuRuiuEUMODVHXcHo7dFK61GrrYe1FU8f.2UgNfGG	\N	f	f	2020-01-03 05:00:32.149549	2020-01-03 05:00:32.149549	\N	\N
+57	图门劭青	student21@test.com	201994715544396	力学	11	20190713	f	$2a$12$3GDM1rglnSjThLQoDw2gs.li3Sv68M4HbrxZu/.xGjHcrLD5NrGuW	\N	f	f	2020-01-03 05:00:32.39039	2020-01-03 05:00:32.39039	\N	\N
+58	阴易雯	student22@test.com	201965989054389	计算机科学与技术	9	20190713	f	$2a$12$TTfAVzTxLAf/RtXL4J/Jkeksr9An1QfeJ6ApcYN3KvLtas7LBeZQy	\N	f	f	2020-01-03 05:00:32.630658	2020-01-03 05:00:32.630658	\N	\N
+59	公叔清芸	student23@test.com	201929002879180	管理科学与工程	12	20190713	f	$2a$12$qOzbmafbkKKL6gHolGq3jOCm.NgDDEOzEiDy0ASvWn5ttaEadMAfa	\N	f	f	2020-01-03 05:00:32.872216	2020-01-03 05:00:32.872216	\N	\N
+60	伦奇莹	student24@test.com	201914626859071	生物学	6	20190713	f	$2a$12$YNKFArI8Mbd5/IV.zw2P6e3M7no.EGuh974LnHhxkE0kCbph3G8tK	\N	f	f	2020-01-03 05:00:33.11392	2020-01-03 05:00:33.11392	\N	\N
+61	乘宛泉	student25@test.com	201921582319957	软件工程	9	20190713	f	$2a$12$1iEvTOBfTvF.ZgqnKhHfgeAO2cA26c5g3IHPyVSGWbl9aESqyIjTC	\N	f	f	2020-01-03 05:00:33.354887	2020-01-03 05:00:33.354887	\N	\N
+62	端思乔	student26@test.com	201921982724261	管理科学与工程	12	20190713	f	$2a$12$HOHD14VqtKe6Zb6KMNJlkupCk73sKxrzokNrJoAnCf8wZPPjk0z4.	\N	f	f	2020-01-03 05:00:33.596472	2020-01-03 05:00:33.596472	\N	\N
+63	汝思妮	student27@test.com	201911352606876	电子与通信工程	16	20190713	f	$2a$12$q7Y6hlmlZfEmBOvMgxAaJeXdqLHvIaI4aDndb1fjc916OlxN12kvS	\N	f	f	2020-01-03 05:00:33.838193	2020-01-03 05:00:33.838193	\N	\N
+64	霍欣怡	student28@test.com	201964033171562	网络空间管理	17	20190713	f	$2a$12$WIDAo2HErj68cHQnOvVoVuF6m24yZm3W21kn/gFjb3MZFrIHJnAFO	\N	f	f	2020-01-03 05:00:34.078742	2020-01-03 05:00:34.078742	\N	\N
+65	官嘉旺	student29@test.com	201924806583997	控制科学与工程	9	20190713	f	$2a$12$WsvVkgp/7SN/LpzB2ysW1ua/3De9EJlhxNUlWRaImkJkdDa90V6re	\N	f	f	2020-01-03 05:00:34.320885	2020-01-03 05:00:34.320885	\N	\N
+66	嬴雅孜	student30@test.com	201999080684355	大气科学	7	20190713	f	$2a$12$BcReABFTkk14ZYvuez/y1enuBe0HjJGpRfv5QL3glFd/NtJ9KLDIe	\N	f	f	2020-01-03 05:00:34.563673	2020-01-03 05:00:34.563673	\N	\N
+67	甲姿君	student31@test.com	201936052089793	地质学	7	20190713	f	$2a$12$ejJpqDdJ8p6y7WQ663nBYuhkvfbCk9nhB1uj4KRwbm3OGRf7Poso.	\N	f	f	2020-01-03 05:00:34.80563	2020-01-03 05:00:34.80563	\N	\N
+68	芮珮康	student32@test.com	201996534544299	化学工程与技术	4	20190713	f	$2a$12$NzQgzIkJH1q6NG2TeFDYn.HKqIvM8GUF/lRVoSTlH5P1bVWJYOfXW	\N	f	f	2020-01-03 05:00:35.046832	2020-01-03 05:00:35.046832	\N	\N
+69	钦昇屏	student33@test.com	201989933349527	统计学	1	20190713	f	$2a$12$iINXJcuZUhx9gCooa1WQ1.9C.0Vx6SgCuMyM8o8HPVGMm3LOhCan6	\N	f	f	2020-01-03 05:00:35.288741	2020-01-03 05:00:35.288741	\N	\N
+70	羽念然	student34@test.com	201962773136035	系统科学	1	20190713	f	$2a$12$wPSPHdBHyAdggYFH7zhSTuyaAEhh4j3ej9yyeGQUmXmBN363qTO0i	\N	f	f	2020-01-03 05:00:35.527159	2020-01-03 05:00:35.527159	\N	\N
+71	伏顺孝	student35@test.com	201920613029414	系统科学	1	20190713	f	$2a$12$//16t8G4hZP3/WyXFyad.eeTOE6uA0kKanB2.Iu51p0DvUZLZmyjq	\N	f	f	2020-01-03 05:00:35.765387	2020-01-03 05:00:35.765387	\N	\N
+72	郎汉郁	student36@test.com	201964308862072	土木工程	11	20190713	f	$2a$12$XROdYcaTxMrf/Gj/DySDmO4lg08AVRXXu2PrhRU.y7WVPgDtoe6qW	\N	f	f	2020-01-03 05:00:36.002822	2020-01-03 05:00:36.002822	\N	\N
+73	藩松香	student37@test.com	201920394796018	天文学	3	20190713	f	$2a$12$QWi3JILSxIyhSDeWp2ngauWaohlvjy2RIQDdFx3DM0bvmKIQKVJu2	\N	f	f	2020-01-03 05:00:36.24093	2020-01-03 05:00:36.24093	\N	\N
+74	果江汉	student38@test.com	201998258429611	信息与通信技术	10	20190713	f	$2a$12$iSLqqO8cDdEdoJotSVfuteBXAohJM6H2MMly5zWjtTAf0mHSaWzAa	\N	f	f	2020-01-03 05:00:36.480496	2020-01-03 05:00:36.480496	\N	\N
+75	永韵麟	student39@test.com	201960914040707	集成电路工程	16	20190713	f	$2a$12$iGOgwdCXEjZ14Byr3XH2D.pm0z0bdJR3C8Sp6FWTYik2ni2/DaHdK	\N	f	f	2020-01-03 05:00:36.718973	2020-01-03 05:00:36.718973	\N	\N
+76	修玫昇	student40@test.com	201958236418555	海洋科学	7	20190713	f	$2a$12$mnIYAEJMQNdE/EHTfOhAwuWNwMpN8FTCqZe.R3qohzPy.vnXLL8sK	\N	f	f	2020-01-03 05:00:36.95622	2020-01-03 05:00:36.95622	\N	\N
+77	罕小忠	student41@test.com	201939680380507	天文学	3	20190713	f	$2a$12$uoOzrIqEthp1OItKjP8Ts.VY7vX7iaT3Uud/zG7E6UueOBArcPLD6	\N	f	f	2020-01-03 05:00:37.193489	2020-01-03 05:00:37.193489	\N	\N
+78	謇裕琳	student42@test.com	201921231532076	电子科学与技术	10	20190713	f	$2a$12$WnwmsXpL.JEv2XEb7UFfa.JI/dbZMwmkmbpVGAC/pr3OPARq6iGwu	\N	f	f	2020-01-03 05:00:37.430673	2020-01-03 05:00:37.430673	\N	\N
+79	中茹鑫	student43@test.com	201979232707017	动力工程及工程热物理	11	20190713	f	$2a$12$kkpQkRyTHaRrZmFxvyssqexYEU01nsgzMvhWcqUsByut.yxKm5eGO	\N	f	f	2020-01-03 05:00:37.66894	2020-01-03 05:00:37.66894	\N	\N
+80	廉亭仁	student44@test.com	201954123489875	天文学	3	20190713	f	$2a$12$7USB.9cbUXVrWfFK.lV/4.awH0LouMayzFVT4R3puqvEj.0g34PM2	\N	f	f	2020-01-03 05:00:37.908281	2020-01-03 05:00:37.908281	\N	\N
+81	仵枝琳	student45@test.com	201928485244159	网络空间管理	17	20190713	f	$2a$12$/VZaOi6iDYDgIesdB.XAm.JLZDKz4AAoULhEDgx5DMzXUZq.ZtuA6	\N	f	f	2020-01-03 05:00:38.146834	2020-01-03 05:00:38.146834	\N	\N
+82	谯慈白	student46@test.com	201914249845541	网络空间管理	17	20190713	f	$2a$12$QDnQLjahgnjr6.Uhl85Stukluuj9K42KFp2d4K4a48OgWlE3mp1Ve	\N	f	f	2020-01-03 05:00:38.38747	2020-01-03 05:00:38.38747	\N	\N
+83	伍和嘉	student47@test.com	201986781825154	天文学	3	20190713	f	$2a$12$vnmQLxdsFKFlmSMzkt/BYuvwQqf/WS89b2u2NLQ.GnZekgz.z3Xbe	\N	f	f	2020-01-03 05:00:38.62692	2020-01-03 05:00:38.62692	\N	\N
+84	睢淑定	student48@test.com	201993288748351	基础医学	15	20190713	f	$2a$12$6cj6r9yw2vqS0wQWj82un.7tUPhHA4acsWd5bVCs.Qr6KzT0sSEf.	\N	f	f	2020-01-03 05:00:38.866964	2020-01-03 05:00:38.866964	\N	\N
+85	摩金宏	student49@test.com	201916595155694	系统科学	1	20190713	f	$2a$12$ceA9jYgiOj4wklUXel0/b.sHHJW0/srTdYZjrJO6hTTHlxJ3N6hKm	\N	f	f	2020-01-03 05:00:39.106267	2020-01-03 05:00:39.106267	\N	\N
+86	祢江钰	student50@test.com	201919817347384	系统科学	1	20190713	f	$2a$12$4ZXK.Wl94oaqsAsz9NXPPOhRrAD.uvUejGOkX2N8o2lydNGulwWGy	\N	f	f	2020-01-03 05:00:39.346332	2020-01-03 05:00:39.346332	\N	\N
+87	守恬齐	student51@test.com	201970915216603	生物学	6	20190713	f	$2a$12$kSj59VS/uQFTARE09Ij/juNZrXMOJH2YsqA1FxI2fXZ0iKJIRl0t2	\N	f	f	2020-01-03 05:00:39.587882	2020-01-03 05:00:39.587882	\N	\N
+88	蓝昭雨	student52@test.com	201927279493357	化学	4	20190713	f	$2a$12$jWR.TMRgajfKf8Wiji8wqOOY4nTEo/7iHey4qOtyVBbaIK1jCXfJW	\N	f	f	2020-01-03 05:00:39.829447	2020-01-03 05:00:39.829447	\N	\N
+89	线礼恭	student53@test.com	201949409884702	天文学	3	20190713	f	$2a$12$ztRRQicC2SE6X1zfQyFVwe.RmESzwfDj8JIGwik23XmTZUYom6K7K	\N	f	f	2020-01-03 05:00:40.071948	2020-01-03 05:00:40.071948	\N	\N
+90	覃璇光	student54@test.com	201946740797297	材料科学与工程	5	20190713	f	$2a$12$pMQc7DpVEAw84abXB.eYrOvEk6uyDKtksgs6X/hLhJHifIBSx5nzG	\N	f	f	2020-01-03 05:00:40.314182	2020-01-03 05:00:40.314182	\N	\N
+91	狂彦元	student55@test.com	201963041715409	心理学	14	20190713	f	$2a$12$29e422o8/2iHjiEt.aTIYOlEoeSqTG0FDPHkCAaQ6WvKbUdZ95kDi	\N	f	f	2020-01-03 05:00:40.556083	2020-01-03 05:00:40.556083	\N	\N
+92	冉山甫	student56@test.com	201933074072856	天文学	3	20190713	f	$2a$12$syyffsY40advIWUOZ9IYZeXLDZsR71rdPt/ikrbGmn6hbLAcFsoTG	\N	f	f	2020-01-03 05:00:40.797332	2020-01-03 05:00:40.797332	\N	\N
+93	劳伸君	student57@test.com	201969924084745	哲学	14	20190713	f	$2a$12$yXl0XvWkJ21RzQMdm9HFy.cgQD9KtxpG19jBsTSepKMGTxbLmDSCK	\N	f	f	2020-01-03 05:00:41.037746	2020-01-03 05:00:41.037746	\N	\N
+94	于美爱	student58@test.com	201998309030909	公共管理	13	20190713	f	$2a$12$070h.EV7nql7Xwn20E1Yqe686YNFR5TKF.RkLnPlGhh/LNUapTYqe	\N	f	f	2020-01-03 05:00:41.276681	2020-01-03 05:00:41.276681	\N	\N
+95	第五美弘	student59@test.com	201944990321797	科学技术史	14	20190713	f	$2a$12$UR8JNzOt5H2kyogajUNDPeFHr0gBVx83Hs00bm7Ta4bDYHBHJskFa	\N	f	f	2020-01-03 05:00:41.516727	2020-01-03 05:00:41.516727	\N	\N
+96	茹百达	student60@test.com	201973971142815	电子与通信工程	16	20190713	f	$2a$12$o9X1059E6qV2CyZpl76t1OK7FvPbT9TQIz8jenYvgVS6lHijSU3K2	\N	f	f	2020-01-03 05:00:41.756501	2020-01-03 05:00:41.756501	\N	\N
+97	富雪其	student61@test.com	201998293952099	核科学与技术	2	20190713	f	$2a$12$HBxqMEiz/JJj.0pP7jcN0ODm2bZJtmpGb0qYPqAkcpZw.MlNh0rQq	\N	f	f	2020-01-03 05:00:41.994551	2020-01-03 05:00:41.994551	\N	\N
+98	焦冠宁	student62@test.com	201946381413671	法学	13	20190713	f	$2a$12$Fd/TUIfJR49qQardusB7E.UJvEgzavXc2tyQ6AunkvInYuXmK2pQu	\N	f	f	2020-01-03 05:00:42.233211	2020-01-03 05:00:42.233211	\N	\N
+99	解韵麟	student63@test.com	201927715262527	统计学	1	20190713	f	$2a$12$gV51kn.fyVe0Z5orV/gUE.ShxeUoVtMBlWOQ0e4AI.p/EmFQNiJAS	\N	f	f	2020-01-03 05:00:42.472547	2020-01-03 05:00:42.472547	\N	\N
+100	满隆绮	student64@test.com	201917034681835	数学	1	20190713	f	$2a$12$D4Ah4K7SYAV2H3vSIzXxP.Hqc2ptbtO.XhAbc0QcHtjkzNtczw7Mm	\N	f	f	2020-01-03 05:00:42.713921	2020-01-03 05:00:42.713921	\N	\N
+101	耿雯吟	student65@test.com	201960427987714	生物医学工程	15	20190713	f	$2a$12$7V/WqmePnyE4p1yWDnbAaO1JlwoYzbShst/m15UtS7zK1/vYZBoUW	\N	f	f	2020-01-03 05:00:42.95986	2020-01-03 05:00:42.95986	\N	\N
+102	威映宣	student66@test.com	201999148580692	数学	1	20190713	f	$2a$12$zQ9mDqGpK9eAIJl88iHWQOoNm3DAI2RpdQXkN/N0P80SoU.ANvAnu	\N	f	f	2020-01-03 05:00:43.199601	2020-01-03 05:00:43.199601	\N	\N
+103	于恬仁	student67@test.com	201934720094790	天文学	3	20190713	f	$2a$12$Gyld4KGuzP2ZpjICQMbuQ.EWmMnz24QmAmbahfbmswgh6Kl8g4wd.	\N	f	f	2020-01-03 05:00:43.438599	2020-01-03 05:00:43.438599	\N	\N
+104	漆雕勇年	student68@test.com	201965843003297	生物学	6	20190713	f	$2a$12$bdYGTFJEbks.sCUhpZuNPes.7uMF3k/YPHpQDkqCyNNrlYzk5FZMu	\N	f	f	2020-01-03 05:00:43.677091	2020-01-03 05:00:43.677091	\N	\N
+105	乙琪幸	student69@test.com	201935878611358	数学	1	20190713	f	$2a$12$OHF5HgHb6HaRSubJVqdawOHQlaEn/nQXMpx2mGRHZhoJMdXuaXgy6	\N	f	f	2020-01-03 05:00:43.915184	2020-01-03 05:00:43.915184	\N	\N
+106	菅骏书	student70@test.com	201975826885751	图书情报与档案管理	12	20190713	f	$2a$12$NvDwBeWYh95U/3Tw9tM6GeERM0MQQJ/btvCIj2AjgD/ncZpzaq0Le	\N	f	f	2020-01-03 05:00:44.153085	2020-01-03 05:00:44.153085	\N	\N
+107	讷殷富察仁行	student71@test.com	201910247199030	生物学	6	20190713	f	$2a$12$yxcYhYWIblbHo.I4K2bopelZ93IQV.k6.Ru56ABYUwzhwOJP18fLu	\N	f	f	2020-01-03 05:00:44.391096	2020-01-03 05:00:44.391096	\N	\N
+108	伦珍心	student72@test.com	201978969940023	数学	1	20190713	f	$2a$12$TAE7HvR8SAD47ONW7Fz1LeTJskRg4vYXyoYNWrzImoDKsGyhZJ97O	\N	f	f	2020-01-03 05:00:44.631946	2020-01-03 05:00:44.631946	\N	\N
+109	朱天亨	student73@test.com	201953549090812	网络空间管理	17	20190713	f	$2a$12$U5HGA8OqryVBtMJ27LqfiuGszosL.RvJ4SAjwwEH9BM3EcJxqKmde	\N	f	f	2020-01-03 05:00:44.872098	2020-01-03 05:00:44.872098	\N	\N
+110	殷喜月	student74@test.com	201921152496564	农业资源利用	8	20190713	f	$2a$12$l0ZwastUpKYFvMJVUy6wnuLlbGy4/nLHHv1RhsfC2EiIyfRMLCCD2	\N	f	f	2020-01-03 05:00:45.11313	2020-01-03 05:00:45.11313	\N	\N
+111	边旺智	student75@test.com	201958834383700	核科学与技术	2	20190713	f	$2a$12$3AbFjKX2rERtXhlznCJy2uJmvn5JldhYnsm.LeTPPXyBFJvtTwWI2	\N	f	f	2020-01-03 05:00:45.354031	2020-01-03 05:00:45.354031	\N	\N
+112	叔水娟	student76@test.com	201971151015301	法学	13	20190713	f	$2a$12$AwhD1Q9vHpgRJQK7yPtuQex15VwLXqBMj0V5UpxTe.FoKQG14vJ22	\N	f	f	2020-01-03 05:00:45.594755	2020-01-03 05:00:45.594755	\N	\N
+113	义育莹	student77@test.com	201918293370304	基础医学	15	20190713	f	$2a$12$hI1b.ir7wwL2SlQgic5kZeVPqVqWF7cdhJVo8Qs/8UIhtXQeC572C	\N	f	f	2020-01-03 05:00:45.833468	2020-01-03 05:00:45.833468	\N	\N
+114	瑞雨纶	student78@test.com	201982655162530	化学	4	20190713	f	$2a$12$/ZzvPKOURR/LX92fi3kSqOHTD7M3Owar448wonbdoUmXpnvEuQvMm	\N	f	f	2020-01-03 05:00:46.072052	2020-01-03 05:00:46.072052	\N	\N
+115	箕瑜念	student79@test.com	201946843956107	环境科学与工程	8	20190713	f	$2a$12$9z5e0TM4y7XhbLVQnnKRaONK1WHbFWymqu6NwEzZ64eeo75Ur3dK2	\N	f	f	2020-01-03 05:00:46.311739	2020-01-03 05:00:46.311739	\N	\N
+116	糜梦倩	student80@test.com	201940113639899	网络空间管理	17	20190713	f	$2a$12$7Q0nwF0Ckm80AWt1uQn1jeOTbehkUPuELc0SPH9CR4qHPZeprxHfG	\N	f	f	2020-01-03 05:00:46.551453	2020-01-03 05:00:46.551453	\N	\N
+117	微生天亨	student81@test.com	201929627714073	计算机科学与技术	9	20190713	f	$2a$12$cmBS0b6evlqxS8uF4L943excSbt8VX6NXL55eL.QXh9gfsCKfaEqS	\N	f	f	2020-01-03 05:00:46.790327	2020-01-03 05:00:46.790327	\N	\N
+118	尤孝瑞	student82@test.com	201978563064287	网络空间管理	17	20190713	f	$2a$12$Ww67UHYkSs.9izC8XMMwxOfDCwtpFnK7JjKWQK0n2rzgB6IMIMi6W	\N	f	f	2020-01-03 05:00:47.029163	2020-01-03 05:00:47.029163	\N	\N
+119	习舜羽	student83@test.com	201973899519735	心理学	14	20190713	f	$2a$12$ImbvSVbhB.4UdJf1wP/xEu0z1ujNk24TLR6ei.hRv.uwpqOWjusdu	\N	f	f	2020-01-03 05:00:47.267348	2020-01-03 05:00:47.267348	\N	\N
+120	丹新乐	student84@test.com	201996068074601	公共管理	13	20190713	f	$2a$12$nO91j1TKqkvdjJxw9Z5Wl.2smyL37YVyeNiTEw4EZ8p7y2EpyD7HK	\N	f	f	2020-01-03 05:00:47.50519	2020-01-03 05:00:47.50519	\N	\N
+121	稽芷雅	student85@test.com	201982737781592	天文学	3	20190713	f	$2a$12$uXWGlivrV/TuhAq2vkWXwuJ04Fg4umoVaELmVqUZY6yLwp.IMh7/.	\N	f	f	2020-01-03 05:00:47.745626	2020-01-03 05:00:47.745626	\N	\N
+122	何林谦	student86@test.com	201954985574239	公共管理	13	20190713	f	$2a$12$s1z55S3foBExJfiu7GA4Oen87Krk6mEZPIl6tL68RhayD.G8SPU7q	\N	f	f	2020-01-03 05:00:47.98595	2020-01-03 05:00:47.98595	\N	\N
+123	宛致信	student87@test.com	201937690180316	新闻传播学	14	20190713	f	$2a$12$/VcHl3TpUIThAs5/Jgu9oOgNVi8RpgQFOONe45UA79uhMTrQwpEVi	\N	f	f	2020-01-03 05:00:48.225619	2020-01-03 05:00:48.225619	\N	\N
+124	阙萱娟	student88@test.com	201965987000534	工商管理	12	20190713	f	$2a$12$orldeiBRiDbxAnuSKh5L1ONNYEe.uhGNEShv5rfX4AwQRVvNM0LYG	\N	f	f	2020-01-03 05:00:48.465576	2020-01-03 05:00:48.465576	\N	\N
+125	仵月岑	student89@test.com	201929725304550	光学工程	5	20190713	f	$2a$12$wzZN.xVU9yPhKV4IqglytuJc7Y2ks9/e/tY15FdQPQK6E9u7g7RTq	\N	f	f	2020-01-03 05:00:48.707902	2020-01-03 05:00:48.707902	\N	\N
+126	庾奕枝	student90@test.com	201983188378634	基础医学	15	20190713	f	$2a$12$hPF/bNBTg1M51OgfJCBMv.41k6HvX7Dr6saqVKn6pgL53cB5g0DcK	\N	f	f	2020-01-03 05:00:48.949096	2020-01-03 05:00:48.949096	\N	\N
+127	拜奇雪	student91@test.com	201915464331867	天文学	3	20190713	f	$2a$12$35TTjc1zTdGat9uxJs8qxe5nZSVYPJXRWv5sRwu2.65wkUGbyypne	\N	f	f	2020-01-03 05:00:49.190507	2020-01-03 05:00:49.190507	\N	\N
+128	桐钰明	student92@test.com	201960108967883	生态学	8	20190713	f	$2a$12$y6y4ym77RfljvY6mlyZMROweE69BUzLggiJrP4l0489cAa9poV/EK	\N	f	f	2020-01-03 05:00:49.43202	2020-01-03 05:00:49.43202	\N	\N
+129	汝爱伦	student93@test.com	201956563831212	核科学与技术	2	20190713	f	$2a$12$sCEpz88F/8Z1HTW1wa613uHAiBTh6UJm5R8RDk4UtjtFtRT5blN8i	\N	f	f	2020-01-03 05:00:49.671707	2020-01-03 05:00:49.671707	\N	\N
+130	赖隆绮	student94@test.com	201932361027661	公共管理	13	20190713	f	$2a$12$RtMFdu1nqgpVumoLpIrFrOoGrFxLeZhAhuN30iyZBsSFBloY7FSo.	\N	f	f	2020-01-03 05:00:49.911798	2020-01-03 05:00:49.911798	\N	\N
+131	淡又季	student95@test.com	201936359000070	计算机科学与技术	9	20190713	f	$2a$12$oLWM52FXfKg3NJ3qwOfO2.QkXUwaIXhzkMcttIhV.nt6zRjN.l3Ai	\N	f	f	2020-01-03 05:00:50.150228	2020-01-03 05:00:50.150228	\N	\N
+132	童勇绿	student96@test.com	201946470195320	生物学	6	20190713	f	$2a$12$ORevl37Xf1nKdptwXw29/elQ.gObwv.fG8VYrU30a4.pqswtmE0G2	\N	f	f	2020-01-03 05:00:50.388058	2020-01-03 05:00:50.388058	\N	\N
+133	佼毓维	student97@test.com	201970870578056	电子与通信工程	16	20190713	f	$2a$12$.XEQKmB20mIXYwrDsOPR..kwgDr.TtOp9/VYcObHTt1IHgiHRuuV6	\N	f	f	2020-01-03 05:00:50.627418	2020-01-03 05:00:50.627418	\N	\N
+134	彤盛吟	student98@test.com	201979938268179	化学工程与技术	4	20190713	f	$2a$12$nravp4hjsrOTGBiWDHjf1uJXitnMqhP8556xmkSeMq8LQZ7vj2Mv6	\N	f	f	2020-01-03 05:00:50.864805	2020-01-03 05:00:50.864805	\N	\N
+135	濮阳琦岳	student99@test.com	201979302495813	力学	11	20190713	f	$2a$12$dsCVJXx2aMAHG.r0fOKks.FrIF9KxDwu41TTbIhJtI0RZiF3nIDyy	\N	f	f	2020-01-03 05:00:51.102733	2020-01-03 05:00:51.102733	\N	\N
+136	桑屏元	student100@test.com	201925751822667	天文学	3	20190713	f	$2a$12$4NUhym.jmAvHFa7otM6GQOHRP6MPw2sZWV09Lf3iz0viVbrWkmz/e	\N	f	f	2020-01-03 05:00:51.343636	2020-01-03 05:00:51.343636	\N	\N
+137	校怡绿	student101@test.com	201987533190259	化学工程与技术	4	20190713	f	$2a$12$03ARZgqZEyYogypGa7rH0eCjbTbX25ddkBQDOVXJGlgUXI.MGsY5u	\N	f	f	2020-01-03 05:00:51.583464	2020-01-03 05:00:51.583464	\N	\N
+138	甄怡珠	student102@test.com	201993134623941	新闻传播学	14	20190713	f	$2a$12$AJ3orld.XlOOK/1eZcNoLeU5YyswGWXfkLJ69RQoGG4PQd7XrTF/K	\N	f	f	2020-01-03 05:00:51.823986	2020-01-03 05:00:51.823986	\N	\N
+139	丹禾宇	student103@test.com	201953360771945	管理科学与工程	12	20190713	f	$2a$12$InJza26XolC5UTU02Tvw8OWBNHn9T8L/iSy2Vd3oPrLyhv6JSL7M2	\N	f	f	2020-01-03 05:00:52.064422	2020-01-03 05:00:52.064422	\N	\N
+140	官昀昆	student104@test.com	201959896993900	核科学与技术	2	20190713	f	$2a$12$QbCDVul69n4NY2/Ps0jpd.q3LhPuVqJx6.Pz2N2kilfZlqyv4wkJW	\N	f	f	2020-01-03 05:00:52.303604	2020-01-03 05:00:52.303604	\N	\N
+141	嬴姿伶	student105@test.com	201989810913284	电子科学与技术	10	20190713	f	$2a$12$QQWB.iSiYySIVp4EOk2GhuCfUbH0ftzjmxa2OXjq8GdYtQLguYLQi	\N	f	f	2020-01-03 05:00:52.543388	2020-01-03 05:00:52.543388	\N	\N
+142	盛琪幸	student106@test.com	201957528515094	动力工程及工程热物理	11	20190713	f	$2a$12$r84m3bFqTx4kUW9PhfR6EOI/hlnfSi8nz0woofPtj5bohN2qzSEsi	\N	f	f	2020-01-03 05:00:52.782712	2020-01-03 05:00:52.782712	\N	\N
+143	御智泰	student107@test.com	201916610645026	集成电路工程	16	20190713	f	$2a$12$62PlSndBUVLWxd7NIAfwSO9yUxArNUKUkZ2B0vhyxwhQNABxD8r.C	\N	f	f	2020-01-03 05:00:53.021031	2020-01-03 05:00:53.021031	\N	\N
+144	骆力侑	student108@test.com	201968306604167	天文学	3	20190713	f	$2a$12$z//3J.hQRZwoWh25EPwoneobwbLtPQRyMclxeZHknbNYlgIJBCRAa	\N	f	f	2020-01-03 05:00:53.260516	2020-01-03 05:00:53.260516	\N	\N
+145	宝屏蓁	student109@test.com	201994757838224	天文学	3	20190713	f	$2a$12$RaprScGPbzOs6brQy4l/TubLiI31LgJ7gIRUuPQKq.4xcBSM267O.	\N	f	f	2020-01-03 05:00:53.498451	2020-01-03 05:00:53.498451	\N	\N
+146	钱亦南	student110@test.com	201983792491020	核科学与技术	2	20190713	f	$2a$12$BRIHEbhsPKvErgLrzsssleiDgtZAFb6oYlvikcV2Ylaur7z/LgEJm	\N	f	f	2020-01-03 05:00:53.738207	2020-01-03 05:00:53.738207	\N	\N
+147	丹洁安	student111@test.com	201980680654234	材料科学与工程	5	20190713	f	$2a$12$tbM6aoIj2OxXq.MXcG8ff.912fb.Jz3/kn8bSg75zn8Tb1TgwfkN.	\N	f	f	2020-01-03 05:00:53.976354	2020-01-03 05:00:53.976354	\N	\N
+148	东杰瑶	student112@test.com	201921862256470	生物学	6	20190713	f	$2a$12$hvE.BAECrrWxIBJUjYq8H.fhi.g8p5gkWmNEkfoOohQuxow9AIAMG	\N	f	f	2020-01-03 05:00:54.216228	2020-01-03 05:00:54.216228	\N	\N
+149	隽雪博	student113@test.com	201994760056802	电气工程	10	20190713	f	$2a$12$318sBMPp3exd5vUjJMGAqetXM4nR.lGjIiKLV.jvuTDpslFSzFSbK	\N	f	f	2020-01-03 05:00:54.45458	2020-01-03 05:00:54.45458	\N	\N
+150	红士诚	student114@test.com	201947874414810	生物医学工程	15	20190713	f	$2a$12$GESH2MkThdo/xBES0pJTxOUhluvi0R/b5deUiTWY/db2dfmteXzH.	\N	f	f	2020-01-03 05:00:54.692962	2020-01-03 05:00:54.692962	\N	\N
+151	吴欢莹	student115@test.com	201967815976959	集成电路工程	16	20190713	f	$2a$12$jJp4ovlz.nhjDU30098/5epSxZHzQwZqNmRdUFtkeJuU69mIqIK0a	\N	f	f	2020-01-03 05:00:54.931151	2020-01-03 05:00:54.931151	\N	\N
+152	藏玮瑞	student116@test.com	201994251011228	药学	15	20190713	f	$2a$12$fJEWzxU3R8.uMRxIfABgSuxRfH//4SqQrP.jUiHjXq8R0Ug3mKmne	\N	f	f	2020-01-03 05:00:55.17141	2020-01-03 05:00:55.17141	\N	\N
+153	徭香智	student117@test.com	201992261724648	应用经济学	12	20190713	f	$2a$12$1c65n43dLDdwqtqtp8r3oufKh4V3hCr4FpBFC6jzGx1MwoP8qp6qq	\N	f	f	2020-01-03 05:00:55.411182	2020-01-03 05:00:55.411182	\N	\N
+154	称克宏	student118@test.com	201982392328731	核科学与技术	2	20190713	f	$2a$12$9mDxlnKu6GBy2TqPl9SoAuzZocItNIVvE2u63v/m9MnJonnE7TbnS	\N	f	f	2020-01-03 05:00:55.649855	2020-01-03 05:00:55.649855	\N	\N
+155	清雅弘	student119@test.com	201969036120245	电子科学与技术	10	20190713	f	$2a$12$B3mEva85nB9B5EUqxyXxBeCOidTW0OJTb/pFla8fU3etvjEQc3BX6	\N	f	f	2020-01-03 05:00:55.888314	2020-01-03 05:00:55.888314	\N	\N
+156	载安惠	student120@test.com	201955962613016	农业资源利用	8	20190713	f	$2a$12$MF.BJuPK7KDWc.OMj/t3xugU69XVGQ5Yi89vCyHheaOc8VOqzUJbG	\N	f	f	2020-01-03 05:00:56.128466	2020-01-03 05:00:56.128466	\N	\N
+157	蓟仕月	student121@test.com	201956260316411	软件工程	9	20190713	f	$2a$12$FqiB/KVAVt7w.lHBuilWUOPo8K2R8gOqD6A7SeSULkelyjwbtAuea	\N	f	f	2020-01-03 05:00:56.368295	2020-01-03 05:00:56.368295	\N	\N
+158	赤俊伶	student122@test.com	201926846615639	生态学	8	20190713	f	$2a$12$heyVw0gPYioSeAR6KvMvCe2GC8s0BRsvxdYNlw98tnDUecu/J1Xji	\N	f	f	2020-01-03 05:00:56.608581	2020-01-03 05:00:56.608581	\N	\N
+159	辜伶雄	student123@test.com	201933479990607	生物学	6	20190713	f	$2a$12$BKLnivYhSJ5Ru12qh2yHjeC4mfs.tTQnqGHbszhK1Kh8SKuNylTya	\N	f	f	2020-01-03 05:00:56.848514	2020-01-03 05:00:56.848514	\N	\N
+160	宗礼舜	student124@test.com	201932050204546	网络空间管理	17	20190713	f	$2a$12$55YtumkCQJf2x.VbTcrlfOdpNnNEDTvY/cM7VxYOQOB6ZNJH6nQ8i	\N	f	f	2020-01-03 05:00:57.088972	2020-01-03 05:00:57.088972	\N	\N
+161	无坤萱	student125@test.com	201955305517365	图书情报与档案管理	12	20190713	f	$2a$12$tm2HRZ/g1uJ6b9CN05YNVOS2E1PF5xY.6jnxgZNETeQelHpCJpTKq	\N	f	f	2020-01-03 05:00:57.327072	2020-01-03 05:00:57.327072	\N	\N
+162	坚茂斌	student126@test.com	201973564866836	心理学	14	20190713	f	$2a$12$PEBtsBHkLBwl/LSyeF0xqOalKkphaxJYbchHcykJzGflJn8VqPSne	\N	f	f	2020-01-03 05:00:57.565537	2020-01-03 05:00:57.565537	\N	\N
+163	焉立菱	student127@test.com	201938748564982	控制科学与工程	9	20190713	f	$2a$12$q6CX.iUg51M6erh5dv7b/.YV/EYURunDGoNbnkXAbnVLKStETpG7K	\N	f	f	2020-01-03 05:00:57.803902	2020-01-03 05:00:57.803902	\N	\N
+164	叔幼沛	student128@test.com	201940589469933	药学	15	20190713	f	$2a$12$pD2ka5k8d/z/cYzXG7kP2On0oPmbh7vzLCdC88w6e00Rzb39TGHM.	\N	f	f	2020-01-03 05:00:58.042269	2020-01-03 05:00:58.042269	\N	\N
+165	弥育名	student129@test.com	201952570880645	材料科学与工程	5	20190713	f	$2a$12$w1Ef1Ma.46wqRoko97i7O.3i0aawjPg4J7u0PiolHUx.0/i2xpS7a	\N	f	f	2020-01-03 05:00:58.284201	2020-01-03 05:00:58.284201	\N	\N
+166	臧云隆	student130@test.com	201975475607955	生物学	6	20190713	f	$2a$12$gYNcHRa.rFRo3Dwt63s3PeA5W6Wc3ESVOW/tPD/7Q1D6pMi.9cAmy	\N	f	f	2020-01-03 05:00:58.524954	2020-01-03 05:00:58.524954	\N	\N
+167	掌旻幸	student131@test.com	201924766266792	统计学	1	20190713	f	$2a$12$0mjqws8ZHoi89tPh0aqYwO5uSIZFKtO5612I0kho30CuHFQle/hUC	\N	f	f	2020-01-03 05:00:58.764445	2020-01-03 05:00:58.764445	\N	\N
+168	银百芷	student132@test.com	201932879214864	化学工程与技术	4	20190713	f	$2a$12$D6HSr7B1Feu66VGc11qWDOiqunbgksYJsICTN6sttQakmVZF44jhu	\N	f	f	2020-01-03 05:00:59.004138	2020-01-03 05:00:59.004138	\N	\N
+169	厚瑜人	student133@test.com	201947047765637	法学	13	20190713	f	$2a$12$ZYCs8DA5pGCBVq5Atr7SFexewapvYWLSwgPShkjV0aah27coTcLU6	\N	f	f	2020-01-03 05:00:59.246072	2020-01-03 05:00:59.246072	\N	\N
+170	褒萱娟	student134@test.com	201984437037482	系统科学	1	20190713	f	$2a$12$HoGYkO15G5.B3SbkRhWQs.CP41JWI3A0Yiv66qHPdH4sJj/OEXVw2	\N	f	f	2020-01-03 05:00:59.487254	2020-01-03 05:00:59.487254	\N	\N
+171	胡彦昇	student135@test.com	201939208385888	物理学	2	20190713	f	$2a$12$jfO5u23DvS6ROmIXXADgZuNWe3/bqFNaOaqutLXaj4aZYE3e/NWou	\N	f	f	2020-01-03 05:00:59.727562	2020-01-03 05:00:59.727562	\N	\N
+172	謇乐祥	student136@test.com	201996538022843	核科学与技术	2	20190713	f	$2a$12$EqhyaLBXT1PzZLEE1k5bOu1qgZMcHpuwxbjJG2tGZno342uTox41i	\N	f	f	2020-01-03 05:00:59.968206	2020-01-03 05:00:59.968206	\N	\N
+173	咸邦贞	student137@test.com	201963071670581	网络空间管理	17	20190713	f	$2a$12$1nEOns5EBjd3IQRu63nS9.AvBhK4koPZqdjtTQFiAf6Ulyj2KysoK	\N	f	f	2020-01-03 05:01:00.210085	2020-01-03 05:01:00.210085	\N	\N
+174	夏凤幸	student138@test.com	201920405252702	化学工程与技术	4	20190713	f	$2a$12$6.v63PHaENpzU/sqh7CHK.jK9ybx2U9ZLA8qibPEVODPthLV2oHXS	\N	f	f	2020-01-03 05:01:00.450499	2020-01-03 05:01:00.450499	\N	\N
+175	乌杰旺	student139@test.com	201971060369920	化学	4	20190713	f	$2a$12$g.CIiyIL/.jqeH21AFycYOQ7WGxiwBx4WLj438JgAsQfhnPpWHYK6	\N	f	f	2020-01-03 05:01:00.689435	2020-01-03 05:01:00.689435	\N	\N
+176	威桓政	student140@test.com	201923633371667	力学	11	20190713	f	$2a$12$dPgTr7O5YiFwXpli5oUBOew3.bmuBn2LoW39upChcW9ET.RnbmtpG	\N	f	f	2020-01-03 05:01:00.928001	2020-01-03 05:01:00.928001	\N	\N
+177	任汉郁	student141@test.com	201994937570575	天文学	3	20190713	f	$2a$12$AO91FWM4JDlNNV.qkqrvue97Yi.ujAubJjv22Ufh7b7I8YaAev3Ua	\N	f	f	2020-01-03 05:01:01.169642	2020-01-03 05:01:01.169642	\N	\N
+178	隗坤喜	student142@test.com	201941128893787	物理学	2	20190713	f	$2a$12$12bN0Qj3Q2gE.ovkUgQddu1ySXYaeJ73Tq.Mwd3ZePBsWdozT2nbG	\N	f	f	2020-01-03 05:01:01.409415	2020-01-03 05:01:01.409415	\N	\N
+179	考洁智	student143@test.com	201968747373585	网络空间管理	17	20190713	f	$2a$12$Vq4tMsrdpnHOzMpCu2eMLemSEywx6yu9FTvPhY2fIJA7iYNEagg6u	\N	f	f	2020-01-03 05:01:01.652565	2020-01-03 05:01:01.652565	\N	\N
+180	桂富梅	student144@test.com	201976030629139	生物学	6	20190713	f	$2a$12$eWbfQP0d0VDF43M5m3VrseNhHmk3fsKkXQmD/xjJjtKgVihPKsYMy	\N	f	f	2020-01-03 05:01:01.892065	2020-01-03 05:01:01.892065	\N	\N
+181	关贵蓉	student145@test.com	201956090058253	生物医学工程	15	20190713	f	$2a$12$iJzGNSLeBLgyiO66vfA21eHfMWaX.ruUk2r64Y0sjfZECan1S.mZS	\N	f	f	2020-01-03 05:01:02.134332	2020-01-03 05:01:02.134332	\N	\N
+182	聊白轩	student146@test.com	201981938795951	环境科学与工程	8	20190713	f	$2a$12$OIhUfKNs168EXYPErZcGOOHD.iSSwtkQAkq7AXqNt3ULCvnEz6Gkq	\N	f	f	2020-01-03 05:01:02.376791	2020-01-03 05:01:02.376791	\N	\N
+183	隆友玟	student147@test.com	201998014877080	机械工程	5	20190713	f	$2a$12$UIfjObApmn4SaDgSLQUMN.NhkNxl87f/eoCNoelZOk0GyIa.61A9O	\N	f	f	2020-01-03 05:01:02.619541	2020-01-03 05:01:02.619541	\N	\N
+184	树登云	student148@test.com	201926585098047	药学	15	20190713	f	$2a$12$elUfD1rsgTVymosMymp6..leINxiaULl2S4wVP8GbDYP/59iPm0VC	\N	f	f	2020-01-03 05:01:02.862287	2020-01-03 05:01:02.862287	\N	\N
+185	迮信喜	student149@test.com	201969842225620	测绘科学与技术	7	20190713	f	$2a$12$r3M3trJ7ybZ7jTC0XSLfQe3.QzuULYisDvO5z1klG4f7w.p7lpbM.	\N	f	f	2020-01-03 05:01:03.10492	2020-01-03 05:01:03.10492	\N	\N
+186	实廷青	student150@test.com	201992694585503	网络空间管理	17	20190713	f	$2a$12$6MVErG54090ZOuHYL6kj2e3qlJCrjuJZUL12TZ4JH1Phz6CPZUt/2	\N	f	f	2020-01-03 05:01:03.34417	2020-01-03 05:01:03.34417	\N	\N
+187	岳江原	student151@test.com	201936078917845	信息与通信技术	10	20190713	f	$2a$12$ZS62hvUrJS1x7e7fAXqmB./hlHAiXwHsLeu0NQ/nXiHAAfnp8mKai	\N	f	f	2020-01-03 05:01:03.581161	2020-01-03 05:01:03.581161	\N	\N
+188	祈迪光	student152@test.com	201946506455965	化学工程与技术	4	20190713	f	$2a$12$p2yfdLXijn681bmrowXu2O597GppxRKAVgeG3MPfgt8tOmMiROBcG	\N	f	f	2020-01-03 05:01:03.818104	2020-01-03 05:01:03.818104	\N	\N
+189	爱春定	student153@test.com	201995650903427	核科学与技术	2	20190713	f	$2a$12$veEE88id7wSXBXjx4ATa2u.wM4QqAHMardyxuDu8fBOruM7vJI.Je	\N	f	f	2020-01-03 05:01:04.054587	2020-01-03 05:01:04.054587	\N	\N
+190	国骏欣	student154@test.com	201974930388470	心理学	14	20190713	f	$2a$12$B9Bwa6CqhCnyqbzJJTCqJ.CrJ4u.dixQGOSnrAAVjBsWkF0lLk/1m	\N	f	f	2020-01-03 05:01:04.295637	2020-01-03 05:01:04.295637	\N	\N
+191	玉军恬	student155@test.com	201954620432150	基础医学	15	20190713	f	$2a$12$wxUv4LEKMtap9wBs3LgoSeM0FQQBjPGn2zBtM0xuTwVwHSSBIKh8W	\N	f	f	2020-01-03 05:01:04.534944	2020-01-03 05:01:04.534944	\N	\N
+192	谯兰宣	student156@test.com	201921125786748	环境科学与工程	8	20190713	f	$2a$12$FCsMcNGSG5dXh70w9wr1ceMpw5Qkw9Ow5bhuHzTtg/t553eoC1JtO	\N	f	f	2020-01-03 05:01:04.775155	2020-01-03 05:01:04.775155	\N	\N
+193	太史晋瑄	student157@test.com	201984867069514	生态学	8	20190713	f	$2a$12$RSho1FBtf5vcajwnpkKPsOJr5xKJXP/0c5m4H4pMJ87dwpUgx47k2	\N	f	f	2020-01-03 05:01:05.012111	2020-01-03 05:01:05.012111	\N	\N
+194	似行妮	student158@test.com	201949018014851	生物医学工程	15	20190713	f	$2a$12$FEhAMxz12gkMhPjC7P30YOFhEzAlRF4MW2Qbn5WApaoDb6kARkcnG	\N	f	f	2020-01-03 05:01:05.250411	2020-01-03 05:01:05.250411	\N	\N
+195	拱延欣	student159@test.com	201989368936674	力学	11	20190713	f	$2a$12$sPF6Rfj30jTXKBfcXrBorOj/XTkvnYkkzFG.iNkq0GqViGPyBToza	\N	f	f	2020-01-03 05:01:05.487419	2020-01-03 05:01:05.487419	\N	\N
+196	曲钰甫	student160@test.com	201999243175955	电子科学与技术	10	20190713	f	$2a$12$jnPtr11lGofqtsEIpC7Sn.FVvN/mtJw.CVJmAcRx9BPa455lN3X3W	\N	f	f	2020-01-03 05:01:05.724918	2020-01-03 05:01:05.724918	\N	\N
+197	牧智佩	student161@test.com	201931734785704	环境科学与工程	8	20190713	f	$2a$12$U2JXxucyYfSkTbq2EqZv8u1KFsfwMCtQHc8RSb0PcY0rxJLcJmOgC	\N	f	f	2020-01-03 05:01:05.963367	2020-01-03 05:01:05.963367	\N	\N
+198	帛萱娟	student162@test.com	201997558457827	管理科学与工程	12	20190713	f	$2a$12$fItWTyhFtiCdJHL6u0y0pOWe8dcIqfXLvGlOM7VJTmQXw7PqeaeOC	\N	f	f	2020-01-03 05:01:06.202984	2020-01-03 05:01:06.202984	\N	\N
+199	侯雯吟	student163@test.com	201993963365379	土木工程	11	20190713	f	$2a$12$o9tl1v0TLRn3bvWYl/GNMeGt9gy..alizAp0O4HPc.aM5/0ELRT0W	\N	f	f	2020-01-03 05:01:06.442227	2020-01-03 05:01:06.442227	\N	\N
+200	厍建意	student164@test.com	201971964517165	地质资源与地质工程	7	20190713	f	$2a$12$o8k9fEbtO9tzDqIqWIXCCu.dI26VTd.c5y.0o2Lb4hKwEm9h7VPOm	\N	f	f	2020-01-03 05:01:06.681968	2020-01-03 05:01:06.681968	\N	\N
+201	法夫桦	student165@test.com	201926510848951	力学	11	20190713	f	$2a$12$hZ3ogAmLCO5c3w8sdWoz9uLCxAlCZPuzIYeYAIWsVKaCxNdcpp4by	\N	f	f	2020-01-03 05:01:06.922277	2020-01-03 05:01:06.922277	\N	\N
+202	锺亨琦	student166@test.com	201929289426011	应用经济学	12	20190713	f	$2a$12$Vvy1wUKsCvV/2oMqeANj.OyKSXU.UuTQqboyzl1D9G94OaaP3Xugq	\N	f	f	2020-01-03 05:01:07.161116	2020-01-03 05:01:07.161116	\N	\N
+203	郑华松	student167@test.com	201957609407279	生物医学工程	15	20190713	f	$2a$12$0RoVgCg2rVy4oWJhSQjogeJejaXkOmqaG416lDdZm.EZkVz/O3roK	\N	f	f	2020-01-03 05:01:07.39985	2020-01-03 05:01:07.39985	\N	\N
+204	台白豪	student168@test.com	201956044372149	信息与通信技术	10	20190713	f	$2a$12$f6Zle0hGAiExChEJRVvUTOH3r0h0YAbNfJsUwhlTj37wx3WP.5Kka	\N	f	f	2020-01-03 05:01:07.639279	2020-01-03 05:01:07.639279	\N	\N
+205	蓬威芸	student169@test.com	201981799449219	天文学	3	20190713	f	$2a$12$v4uD5o6HM0TBnHFOo79Ed.2dJcBZbOrDeDzo7oJmFj2vfI6EB1/0K	\N	f	f	2020-01-03 05:01:07.878805	2020-01-03 05:01:07.878805	\N	\N
+206	濮芃勇	student170@test.com	201967811322722	集成电路工程	16	20190713	f	$2a$12$mo6W3/h8hAIwS8t5HxY/jeCKf2POzxLW64nh8E/8AKdLoel531w9W	\N	f	f	2020-01-03 05:01:08.117723	2020-01-03 05:01:08.117723	\N	\N
+207	弥意慈	student171@test.com	201941555011309	光学工程	5	20190713	f	$2a$12$KbDeJxUppZCMCadXzpzFaejthbXgOPZ2RB.ZvXqz.BYhBwk/QxzEe	\N	f	f	2020-01-03 05:01:08.35582	2020-01-03 05:01:08.35582	\N	\N
+208	蔚仕月	student172@test.com	201933582523339	系统科学	1	20190713	f	$2a$12$B4EOVDkuRuDXsvO1lDpBLOF1jASRdXMvqL3KCzL8ya4hKRmY7qY26	\N	f	f	2020-01-03 05:01:08.593761	2020-01-03 05:01:08.593761	\N	\N
+209	戢宥辉	student173@test.com	201984748082701	电子与通信工程	16	20190713	f	$2a$12$nE/f1RqKcm/96EYD0A4cYeS8A1TGkrAHl1RLwg2eD4BdGQh41Gib.	\N	f	f	2020-01-03 05:01:08.833071	2020-01-03 05:01:08.833071	\N	\N
+210	肥函志	student174@test.com	201994228242088	哲学	14	20190713	f	$2a$12$O8oWBzEhCIOEtFJTz5/FIuILdPCdR7R53gBlhnHta.hD.isOxs/Lu	\N	f	f	2020-01-03 05:01:09.072151	2020-01-03 05:01:09.072151	\N	\N
+211	庄平诚	student175@test.com	201929182001820	核科学与技术	2	20190713	f	$2a$12$Zk4PX1u10b4/9AzFZEEoPuPD0wHjqBV6WMVyQMzieHxWNoxWXTa4e	\N	f	f	2020-01-03 05:01:09.313274	2020-01-03 05:01:09.313274	\N	\N
+212	范姜卉冰	student176@test.com	201951678536234	工商管理	12	20190713	f	$2a$12$KfVgCCRjDChI6Xxs6D24fuGGiUbKcb91AYnsEwHx27pgD0BIcjcWO	\N	f	f	2020-01-03 05:01:09.553365	2020-01-03 05:01:09.553365	\N	\N
+213	甘宇绍	student177@test.com	201942932183347	天文学	3	20190713	f	$2a$12$3VJNbmhag2Pt7DblPix/VOpCQuU06EIRqzBk5llz7brkXe1jruYL.	\N	f	f	2020-01-03 05:01:09.791275	2020-01-03 05:01:09.791275	\N	\N
+214	来瑜人	student178@test.com	201931144106321	核科学与技术	2	20190713	f	$2a$12$Ha/6Wg1H3W8qNNnEDXNP1uqvaeTo8GY1A03F.rLlgz9yto2njAXUm	\N	f	f	2020-01-03 05:01:10.029231	2020-01-03 05:01:10.029231	\N	\N
+215	出白豪	student179@test.com	201918605406073	电气工程	10	20190713	f	$2a$12$cCraEMHZcf.YETDHuCEcguBVwMMgQBDA3c151gP6wNvYEW4MOp0ja	\N	f	f	2020-01-03 05:01:10.266974	2020-01-03 05:01:10.266974	\N	\N
+216	危盛吟	student180@test.com	201945543246241	力学	11	20190713	f	$2a$12$/.Tbz5eWuT66xlBuPWNLru/zubJiCRhw5bG.3VLmUdK4GUwW5hgPi	\N	f	f	2020-01-03 05:01:10.503835	2020-01-03 05:01:10.503835	\N	\N
+217	战屏蓁	student181@test.com	201961638531084	心理学	14	20190713	f	$2a$12$5yhWwmGSt8gnKHbmLATfM.LP6uWpSF/Iu2yGoTh2bR8e.aaxsG4Oy	\N	f	f	2020-01-03 05:01:10.7403	2020-01-03 05:01:10.7403	\N	\N
+218	蒙希妹	student182@test.com	201969409825043	电子与通信工程	16	20190713	f	$2a$12$Dat7BmfXVLHUGuN0f4qRnOcFO9uBlI/wxKy1GQbNXjQWw3S/VcOke	\N	f	f	2020-01-03 05:01:10.977339	2020-01-03 05:01:10.977339	\N	\N
+219	频春定	student183@test.com	201956452570393	物理学	2	20190713	f	$2a$12$lAkzKCvXewCtWdIhGciineDUZRBlf9wbf7OEHSvkV5EOWEpqnp5Z2	\N	f	f	2020-01-03 05:01:11.215724	2020-01-03 05:01:11.215724	\N	\N
+220	纳善政	student184@test.com	201913792141639	海洋科学	7	20190713	f	$2a$12$Jrxi9U7Z.eQwsUL1EW5hRO/.P6hyj6Hp0BgBwr/a/gpdT9vpdUfae	\N	f	f	2020-01-03 05:01:11.454757	2020-01-03 05:01:11.454757	\N	\N
+221	路慈白	student185@test.com	201923876354216	地质学	7	20190713	f	$2a$12$Ed6R3q1wIg7kvTwQxGpi6e0ZFGxZZxZ0jq2EWoSdAAc94KiVfY1V6	\N	f	f	2020-01-03 05:01:11.694353	2020-01-03 05:01:11.694353	\N	\N
+222	司马伸君	student186@test.com	201967294057269	新闻传播学	14	20190713	f	$2a$12$WvsbTCenolIa2ZKO2BRNDe9jp6bSxOhPAY3CYkhL74nc/UbUb/6e2	\N	f	f	2020-01-03 05:01:11.933249	2020-01-03 05:01:11.933249	\N	\N
+223	澹台佩妏	student187@test.com	201948105995754	地理学	8	20190713	f	$2a$12$woZAVpqa5c0f87BH0jVc8eT5hKIW.S.r0Xa5X4M9HDuq5Fc7/mTQa	\N	f	f	2020-01-03 05:01:12.17257	2020-01-03 05:01:12.17257	\N	\N
+224	初昱侑	student188@test.com	201967197015548	网络空间管理	17	20190713	f	$2a$12$qfyVxvnwASy/BuM13vGB..gyaiI5H3FITiDkhTHbs/rMStTVZAYGW	\N	f	f	2020-01-03 05:01:12.410402	2020-01-03 05:01:12.410402	\N	\N
+225	香英刚	student189@test.com	201950260823251	工商管理	12	20190713	f	$2a$12$tGisG/5.RbZEazpn72dBVusdU3v/FjnZ0QsBtOoi/0LJvVPsB5UCG	\N	f	f	2020-01-03 05:01:12.648285	2020-01-03 05:01:12.648285	\N	\N
+226	曹虹亨	student190@test.com	201948123739022	电子与通信工程	16	20190713	f	$2a$12$QmunXzbi9V0P0kmcAeLmOOhOdPgQOZW7JvGxt/fe.tiHUZdyskywe	\N	f	f	2020-01-03 05:01:12.885781	2020-01-03 05:01:12.885781	\N	\N
+227	绳建新	student191@test.com	201947286109158	图书情报与档案管理	12	20190713	f	$2a$12$PEDQvRvttxMip6ue4kA/y.xyrMJdTPUKLNbIpF7UlxstYsJ4flqLC	\N	f	f	2020-01-03 05:01:13.125809	2020-01-03 05:01:13.125809	\N	\N
+228	完颜昱治	student192@test.com	201949457393945	网络空间管理	17	20190713	f	$2a$12$Q.hWGGagVQbnYXSwYDArEeFQQhLsKHNJCUmt3gp3wq5sqM682HX0i	\N	f	f	2020-01-03 05:01:13.364641	2020-01-03 05:01:13.364641	\N	\N
+229	白佩如	student193@test.com	201919290279560	集成电路工程	16	20190713	f	$2a$12$lHtmkD9bV0C14K1Z2yLOUugFcLmesZddh9dZCiyhiO7iw6U6D.3QO	\N	f	f	2020-01-03 05:01:13.603284	2020-01-03 05:01:13.603284	\N	\N
+230	富察以彬	student194@test.com	201973913967327	生物学	6	20190713	f	$2a$12$GleAIbVgFdu5rQuuszW4f.PO3laL8xPLafJKZKUYgiT3DJgn2jEBS	\N	f	f	2020-01-03 05:01:13.842213	2020-01-03 05:01:13.842213	\N	\N
+231	箕奇婷	student195@test.com	201970106466152	天文学	3	20190713	f	$2a$12$JJYcdh0nIFhRvxmy.QfQfeHEIVMhDoH25jj1NLzA/cTNOlEFl8U56	\N	f	f	2020-01-03 05:01:14.082909	2020-01-03 05:01:14.082909	\N	\N
+232	安苓海	student196@test.com	201966559631719	化学	4	20190713	f	$2a$12$L8ooES9BEsUUHx.rCZ1KbOcx2/dOvcZy/PMerJObSxQj5JdG0NQx6	\N	f	f	2020-01-03 05:01:14.321334	2020-01-03 05:01:14.321334	\N	\N
+233	斐禾刚	student197@test.com	201972281661179	信息与通信技术	10	20190713	f	$2a$12$lYMFuY5qQkDFBK6NNZ9ZLuUTLDAPcCyPQmTFL9Ge8bmek6grbbJ0e	\N	f	f	2020-01-03 05:01:14.562023	2020-01-03 05:01:14.562023	\N	\N
+234	勤奕枝	student198@test.com	201995945070172	材料科学与工程	5	20190713	f	$2a$12$jI0HI15j1Cf3ONddRajJReicOvd4l/YQHPEes9I3fTVTglZuhAIoS	\N	f	f	2020-01-03 05:01:14.800319	2020-01-03 05:01:14.800319	\N	\N
+235	良玲俊	student199@test.com	201935445670794	控制科学与工程	9	20190713	f	$2a$12$FizXhzFKyvWUFLNxojLR8.VhGctvexJQ/HxY/W3C4DeTCVD5k.91W	\N	f	f	2020-01-03 05:01:15.038258	2020-01-03 05:01:15.038258	\N	\N
+236	野登云	student200@test.com	201995202374239	管理科学与工程	13	20190713	f	$2a$12$VhuLQzSuNN/jRyuGZcdwvOxwaXA19JoxbkmgIUQacxEK9jSPs4PQ2	\N	f	f	2020-01-03 05:01:15.278052	2020-01-03 05:01:15.278052	\N	\N
+\.
+
+
+--
+-- Name: announcements_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('public.announcements_id_seq', 1, false);
+
+
+--
+-- Name: course_infos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('public.course_infos_id_seq', 34, true);
+
+
+--
+-- Name: courses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('public.courses_id_seq', 34, true);
+
+
+--
+-- Name: departs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('public.departs_id_seq', 17, true);
+
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('public.grades_id_seq', 1, false);
+
+
+--
+-- Name: inform_articles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('public.inform_articles_id_seq', 15, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 236, true);
+
+
+--
+-- Name: announcements announcements_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.announcements
+    ADD CONSTRAINT announcements_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: course_infos course_infos_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.course_infos
+    ADD CONSTRAINT course_infos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: courses courses_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.courses
+    ADD CONSTRAINT courses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: departs departs_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.departs
+    ADD CONSTRAINT departs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: grades grades_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.grades
+    ADD CONSTRAINT grades_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inform_articles inform_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.inform_articles
+    ADD CONSTRAINT inform_articles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_grades_on_course_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_grades_on_course_id ON public.grades USING btree (course_id);
+
+
+--
+-- Name: index_grades_on_user_id; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE INDEX index_grades_on_user_id ON public.grades USING btree (user_id);
+
+
+--
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: ubuntu
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
